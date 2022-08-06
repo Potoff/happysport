@@ -5,7 +5,7 @@ const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
+const config = require(path.join(__dirname, '../config/config'))[env];
 const db = {};
 
 let sequelize;
@@ -14,6 +14,12 @@ if (config.use_env_variable) {
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
+
+sequelize.sync({force: true})
+  .then( () => console.log('DB SYNC'))
+  .catch((err) => {
+    console.log({err: err})
+  });
 
 fs
   .readdirSync(__dirname)
