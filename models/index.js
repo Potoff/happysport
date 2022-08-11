@@ -15,8 +15,8 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-sequelize.sync({force: true})
-  .then( () => console.log('DB SYNC'))
+sequelize.sync()
+  .then( () => console.log('Postgres synchro tonton, c\'est bieng !'))
   .catch((err) => {
     console.log({err: err})
   });
@@ -39,5 +39,6 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+db.user = require('./user')(sequelize, Sequelize);
 
 module.exports = db;

@@ -1,13 +1,13 @@
-<div class="container h-100 d-flex flex-column justify-content-evenly align-items-center">
+<div class="container h-75 d-flex flex-column align-items-center justify-content-evenly">
     <div class="d-flex justify-content-center align-items-center">
-        <img src="images/logo-haltere.png" alt="" class="w-25 border rounded rounded-5 border-2 border-dark border-opacity-25 rounded-circle">
-        <h1 class="ms-2">HappySport</h1>
+        <img src="images/logo-haltere.png" alt="" class="img-fluid w-25 border rounded rounded-5 border-2 border-dark border-opacity-25 rounded-circle p-2">
+        <h1 class="ms-4">HappySport</h1>
     </div>
-    <div class="border rounded rounded-5 border-2 border-dark border-opacity-25 p-5 bg-light">
-        <form method="post" action="login">
+    <div class="border rounded rounded-5 border-2 border-dark border-opacity-25 p-5 bg-light align-self-center w-75-md">
+        <form method="post" action="/login">
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Adresse Mail :</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <label for="email" class="form-label" name="email">Adresse Mail :</label>
+                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Mot de passe :</label>
@@ -17,7 +17,7 @@
                 <button type="submit" class="btn btn-dark">Se connecter</button>
             </div>
             <div class="text-center mt-4">
-                <a href="new-user" class="link-secondary">Première connexion ?</a>
+                <a href="signup" class="link-secondary">Première connexion ?</a>
             </div>
         </form>
     </div>
