@@ -1,5 +1,6 @@
 const db = require('../models');
-const User = db.User;
+const User = db.user;
+const Role = db.role;
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
 
@@ -13,15 +14,15 @@ exports.signup = (req, res, next) => {
             });
             user.save()
                 .then(() => res.status(201).json({ message: 'Utilisateur créé !'}))
-                .then(() => console.log(user))
                 .catch(error => res.status(400).json({ error }));
         })
         .catch(error => res.status(500).json({ error }));
 };
 
 exports.login = (req, res, next) => {
-    User.findOne({ where: { email: req.body.email }})
+    User.findOne({ where: { email: req.body.email }, include: 'Role'})
         .then(user => {
+            console.log(user.Role.type)
             if (!user) {
                 return res.status(401).json({ message: 'Paire login/mot de passe incorrecte' });
             }
