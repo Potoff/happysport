@@ -6,15 +6,14 @@ module.exports = {
         email: 'potoff@lavache.com',
         password: 'hachis parmentier',
         createdAt: new Date(),
-        updatedAt: new Date(),
-        role: 'admin'
+        updatedAt: new Date()
       }], {});
   
   },
 
   async down (queryInterface, Sequelize) {
 
-     return queryInterface.bulkDelete('users', null, {});
+     return queryInterface.bulkDelete('Users', null, {});
      
   }
 };

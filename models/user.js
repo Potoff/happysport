@@ -1,3 +1,4 @@
+const Role = require('./role')
 module.exports = (sequelize, Sequelize) => {
     const User = sequelize.define("User", 
     {
@@ -10,10 +11,20 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull:false
         },
-        role:{
-            type: Sequelize.STRING,
+        RoleId:{
+            type: Sequelize.INTEGER,
+            allowNull:false,
+            references: {
+                model: "Roles",
+                key: "id"
+            }
+
         }
+    },
+    {
+        timestamps: false
     }
     );
     return User;
 };
+

@@ -1,5 +1,4 @@
 'use strict';
-
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
@@ -8,6 +7,7 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(path.join(__dirname, '../config/config'))[env];
 const db = {};
 
+
 let sequelize;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
@@ -15,8 +15,30 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-sequelize.sync()
+sequelize.sync({force: true})
   .then( () => console.log('Postgres synchro tonton, c\'est bieng !'))
+  .then(() =>{
+    db.role.create({
+      type:'admin'
+    })
+  })
+  .then(() => {
+    db.role.create({
+      type:'franchise'
+    })
+  })
+  .then(() => {
+    db.role.create({
+      type:'salle'
+    })
+  })
+  .then(() => {
+    db.user.create({
+      email: 'potoff@lavache.com',
+      password: 'vache',
+      RoleId: 1
+    })
+  })
   .catch((err) => {
     console.log({err: err})
   });
@@ -40,5 +62,15 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 db.user = require('./user')(sequelize, Sequelize);
+db.role = require('./role')(sequelize, Sequelize);
+
+db.role.hasMany(db.user, { as: "Users"});
+db.user.belongsTo(db.role, {
+  foreignKey:{
+    name: "RoleId",
+    allowNull: false
+  },
+  as: "Role"
+});
 
 module.exports = db;
