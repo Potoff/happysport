@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const db = require('./models');
 const createError = require('http-errors');
 
 
@@ -14,6 +13,7 @@ app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 
 app.use('/', indexRouter);

@@ -13,16 +13,15 @@ exports.signup = (req, res, next) => {
                 RoleId: req.body.RoleId
             });
             user.save()
-                .then(() => res.status(201).json({ message: 'Utilisateur créé !'}))
+                .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
                 .catch(error => res.status(400).json({ error }));
         })
         .catch(error => res.status(500).json({ error }));
 };
 
 exports.login = (req, res, next) => {
-    User.findOne({ where: { email: req.body.email }, include: 'Role'})
+    User.findOne({ where: { email: req.body.email }, include: 'Role' })
         .then(user => {
-            console.log(user.Role.type)
             if (!user) {
                 return res.status(401).json({ message: 'Paire login/mot de passe incorrecte' });
             }
@@ -31,11 +30,19 @@ exports.login = (req, res, next) => {
                     if (!valid) {
                         return res.status(401).json({ message: 'Paire login/mot de passe BCRYPT incorrecte' });
                     }
-                    res.status(200).json({
+                    /*Réponse initiale en JSON => Voir pour chainer avec un res.render et à garder pour ajouter le token avec l'AUTH
+                        res.status(200).json({
                         userId: user._id,
                         token: 'TOKEN',
                         message: 'Utilisateur authentifié'
-                    });
+                    });*/
+                    if (user.Role.type === 'admin') {
+                        res.render('admin-index.hbs')
+                    } else if (user.Role.type === 'franchise') {
+                        res.render('franchise-index.hbs');
+                    } else {
+                        res.render('salle-index.hbs');
+                    };
                 })
                 .catch(error => res.status(500).json({ error: error }));
         })
