@@ -1,0 +1,22 @@
+.then(() =>{
+    db.role.create({
+      type:'admin'
+    })
+  })
+  .then(() => {
+    db.role.create({
+      type:'franchise'
+    })
+  })
+  .then(() => {
+    db.role.create({
+      type:'salle'
+    })
+  })
+  .then(() => {
+    db.user.create({
+      email: 'potoff@lavache.com',
+      password: 'vache',
+      RoleId: 1
+    })
+  })

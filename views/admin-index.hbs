@@ -1,1 +1,42 @@
-<h1>Je suis un admin</h1>
+{{!-- Navbar --}}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid ">
+        <div class="d-flex justify-content-between w-100">
+            <div class="d-flex justify-content-start align-items-center text-light">
+                <img src="images/logo-haltere.png" alt=""
+                    class="border rounded rounded-5 border-2 border-dark border-opacity-25 rounded-circle p-1 haltere">
+                <h1 class="ms-4">HappySport</h1>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">Ajouter un partenaire</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Modules</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#'">Salles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Connexion</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    {{!-- Search bar --}}
+
+    <input class="form-control mt-5" list="datalistOptions" id="exampleDataList" placeholder="Chercher un partenaire ... ">
+
+
+</div>
