@@ -6,6 +6,9 @@ const createError = require('http-errors');
 
 const indexRouter = require('./routes/index');
 const userRouter = require('./routes/user');
+const adminRouter = require('./routes/admin');
+const franchiseRouter = require('./routes/franchise');
+const salleRouter = require('./routes/salle');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -18,6 +21,9 @@ app.use(express.urlencoded({extended: true}));
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);
+app.use('/admin', adminRouter);
+app.use('/franchise', franchiseRouter);
+app.use('/salle', salleRouter);
 
 //Middleware to catch an error and fast-forward to next middlewar error handler
 app.use((req, res, next) => {

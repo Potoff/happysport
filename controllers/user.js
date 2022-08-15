@@ -37,12 +37,14 @@ exports.login = (req, res, next) => {
                         message: 'Utilisateur authentifié'
                     });*/
                     if (user.Role.type === 'admin') {
-                        res.render('admin-index.hbs')
+                        res.redirect('/admin');
                     } else if (user.Role.type === 'franchise') {
-                        res.render('franchise-index.hbs');
+                        res.redirect('/franchise');
+                    } else if (user.Role.type === 'sale'){
+                        res.redirect('/salle');
                     } else {
-                        res.render('salle-index.hbs');
-                    };
+                        res.render('error', {message: 'utilisateur non identifié'})
+                    }
                 })
                 .catch(error => res.status(500).json({ error: error }));
         })

@@ -15,30 +15,8 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-sequelize.sync({force: true})
+sequelize.sync()
   .then( () => console.log('Postgres synchro tonton, c\'est bieng !'))
-  .then(() =>{
-    db.role.create({
-      type:'admin'
-    })
-  })
-  .then(() => {
-    db.role.create({
-      type:'franchise'
-    })
-  })
-  .then(() => {
-    db.role.create({
-      type:'salle'
-    })
-  })
-  .then(() => {
-    db.user.create({
-      email: 'potoff@lavache.com',
-      password: 'vache',
-      RoleId: 1
-    })
-  })
   .catch((err) => {
     console.log({err: err})
   });

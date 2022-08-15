@@ -1,3 +1,9 @@
 body{
   height: 100vh;
 }
+
+.haltere{
+  filter: invert(100%);
+  -webkit-filter: invert(100%);
+  width: 15%;
+}
