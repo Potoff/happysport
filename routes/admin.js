@@ -1,14 +1,9 @@
 const express = require('express');
 const router = express.Router();
-
-const adminCtrl = require('../controllers/admin');
-const  user  = require('../models');
+const passport = require('passport');
 
 router.get('/', (req, res, next) => {
-if(!user){
-    res.render('error')
-}
-    res.render('admin-index.hbs')
+                res.render('admin-index')
 })
 
 module.exports = router;

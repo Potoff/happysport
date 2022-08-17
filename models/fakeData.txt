@@ -13,10 +13,4 @@
       type:'salle'
     })
   })
-  .then(() => {
-    db.user.create({
-      email: 'potoff@lavache.com',
-      password: 'vache',
-      RoleId: 1
-    })
-  })
+  
