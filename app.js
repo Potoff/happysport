@@ -43,6 +43,7 @@ app.use(passport.session());
 app.use('/user', userRouter);
 app.use('/admin', (req, res, next) => {
     if (req.isAuthenticated() && req.user.RoleId === 1) {
+        console.log(req.session)
         return next()
     }
     req.flash('error', 'Vous devez être connecté et administrateur pour acceder à cette page !')
