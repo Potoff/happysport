@@ -1,6 +1,7 @@
 const db = require('../models');
 const User = db.user;
 const Role = db.role;
+const Partner = db.partner;
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
 

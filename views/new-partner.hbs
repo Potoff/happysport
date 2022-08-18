@@ -1,0 +1,60 @@
+{{!-- Navbar --}}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid ">
+        <div class="d-flex justify-content-between w-100">
+            <div class="d-flex justify-content-start align-items-center text-light">
+                <img src="images/logo-haltere.png" alt=""
+                    class="border rounded rounded-5 border-2 border-dark border-opacity-25 rounded-circle p-1 haltere">
+                <h1 class="ms-4">HappySport</h1>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin">Retour</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Déconnexion</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<h2 class="text-center mt-4">Création d'un nouveau partenaire</h2>
+<div class="container mt-5">
+    <form method="post" action="/admin/newPartner">
+        <div class="mb-3">
+            <label for="nom" class="form-label">Nom du partenaire</label>
+            <input type="text" class="form-control" id="name" aria-describedby="emailHelp" name="name">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Adresse Mail</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">
+            <div id="emailHelp" class="form-text">Merci de choisir le nom de la franchise comme suit :
+                "nom@happysport.com"</div>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" id="description" cols="15" rows="4" class="form-control"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="image_url" class="form-label">Image</label>
+            <input type="text" class="form-control" id="image_url" aria-describedby="image_urlHelp" name="image_url">
+            <div id="image_urlHelp" class="form-text">Vous n'êtes pas obligé de choisir une image</div>
+        </div>
+        <button type="submit" class="btn btn-success">Valider</button>
+    </form>
+
+    {{#if message}}
+    <div class="alert alert-success" role="alert">
+        <p class="text-center">{{message}}</p>
+    </div>
+    {{/if}}
+</div>
