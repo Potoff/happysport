@@ -29,6 +29,16 @@
 </nav>
 <h2 class="text-center mt-4">Création d'un nouveau partenaire</h2>
 <div class="container mt-5">
+    {{#if message}}
+    <div class="alert alert-success mt-4" role="alert">
+        <p class="text-center">{{message}}</p>
+    </div>
+    {{/if}}
+    {{#if error}}
+    <div class="alert alert-danger mt-4" role="alert">
+        <p class="text-center">{{error}}</p>
+    </div>
+    {{/if}}
     <form method="post" action="/admin/newPartner">
         <div class="mb-3">
             <label for="nom" class="form-label">Nom du partenaire</label>
@@ -44,17 +54,6 @@
             <label for="description" class="form-label">Description</label>
             <textarea name="description" id="description" cols="15" rows="4" class="form-control"></textarea>
         </div>
-        <div class="mb-3">
-            <label for="image_url" class="form-label">Image</label>
-            <input type="text" class="form-control" id="image_url" aria-describedby="image_urlHelp" name="image_url">
-            <div id="image_urlHelp" class="form-text">Vous n'êtes pas obligé de choisir une image</div>
-        </div>
         <button type="submit" class="btn btn-success">Valider</button>
     </form>
-
-    {{#if message}}
-    <div class="alert alert-success" role="alert">
-        <p class="text-center">{{message}}</p>
-    </div>
-    {{/if}}
 </div>

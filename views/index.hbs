@@ -5,6 +5,11 @@
         <h1 class="ms-4">HappySport</h1>
     </div>
     <div class="border rounded rounded-5 border-2 border-dark border-opacity-25 p-5 bg-light align-self-center w-75-md">
+        {{#if message}}
+            <div class="alert alert-danger mt-4 text-center">
+                <p class="text-center">{{message}}</p>
+            </div>
+            {{/if}}
         <form method="POST" action="/user/login">
             <div class="mb-3">
                 <label for="email" class="form-label" name="email">Adresse Mail :</label>
@@ -19,12 +24,7 @@
             </div>
             <div class="text-center mt-4">
                 <a href="signup" class="link-secondary">Première connexion ?</a>
-            </div>
-            {{#if message}}
-            <div class="alert alert-danger mt-4 text-center">
-                <p class="text-center">{{message}}</p>
-            </div>
-            {{/if}}
+            </div>         
         </form>
     </div>
 </div>
