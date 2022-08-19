@@ -38,9 +38,9 @@
 
     <input class="form-control mt-5" list="datalistOptions" id="exampleDataList"
         placeholder="Chercher un partenaire ... ">
-    <div class="container-fluid mt-4 d-flex justify-content-between align-items-center flex-wrap">
+    <div class="container-fluid mt-4 d-flex justify-content-center align-items-center flex-wrap">
         {{#each partners}}
-        <div class="card" style="width: 18rem;">
+        <div class="card mt-2 mx-2" style="width: 18rem;">
             <a href=admin/partner/{{id}}>
                 <img class="card-img-top" src={{image_url}} alt="Card image cap">
             </a>
@@ -68,5 +68,4 @@
         </div>
         {{/each}}
     </div>
-
 </div>
