@@ -23,7 +23,6 @@ exports.newPartner = (req, res, next) => {
         length: 10,
         numbers: true
     })
-    console.log(password)
     bcrypt.hash(password, 10)
         .then((password) => {
             const user = new db.User({
@@ -33,7 +32,6 @@ exports.newPartner = (req, res, next) => {
             })
             user.save()
                 .then((user) => {
-                    console.log(user)
                     const partner = new db.Partner({
                         name: req.body.name,
                         email: user.email,
@@ -41,7 +39,6 @@ exports.newPartner = (req, res, next) => {
                         UserId: user.id
                     });
                     partner.save()
-
                 })
                 .catch((err) => {
                     console.log(err)
@@ -56,4 +53,28 @@ exports.newPartner = (req, res, next) => {
             res.render('new-partner', { error: err })
         })
 
+}
+// Détuire user en même temps que partner
+exports.deletePartner = async (req, res, next) => {
+   await db.Partner.findOne({
+        where: { id: req.params.id }
+    })
+        .then((partner) => {
+            const user = db.User.findOne({
+                where: {id : partner.UserId}
+            })
+            partner.destroy();
+            return user
+        })
+        .then( (user) => {
+            user.destroy();
+        })
+        .then(() => {
+            req.flash('message', 'Le partenaire a bien été supprimé ')
+            res.render('admin-index', {message: req.flash('message')});
+        })
+        .catch((err) => {
+            req.flash('error')
+            res.render('admin-index', { error: err })
+        })
 }

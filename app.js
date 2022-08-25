@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use(session({
-    secret: 'rabbit chiasse',
+    secret: 'rabbit hole is the new cassoulet',
     resave: true,
     saveUninitialized: true
 }));

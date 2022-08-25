@@ -9,6 +9,8 @@ router.get('/addPartnerForm', adminCtrl.addPartnerForm);
 
 router.post('/newPartner', adminCtrl.newPartner);
 
+router.get('/deletePartner/:id', adminCtrl.deletePartner);
+
 // router.post('/newPartner', adminCtrl.newPartner);
 
 module.exports = router;
