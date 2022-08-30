@@ -7,10 +7,16 @@ router.get('/', adminCtrl.getAllPartners);
 
 router.get('/addPartnerForm', adminCtrl.addPartnerForm);
 
+router.get('/addModuleForm', adminCtrl.addModuleForm);
+
 router.post('/newPartner', adminCtrl.newPartner);
 
 router.get('/deletePartner/:id', adminCtrl.deletePartner);
 
-// router.post('/newPartner', adminCtrl.newPartner);
+router.post('/newModule', adminCtrl.newModule);
+
+router.get('/deleteModule/:id', adminCtrl.deleteModule);
+
+
 
 module.exports = router;

@@ -10,13 +10,26 @@ exports.getAllPartners = (req, res, next) => {
             res.render('admin-index', { partners: partners })
         })
         .catch((err) => {
-            res.render('admin-index');
+            req.flash('error')            
+            res.render('admin-index', {error : err});
         })
 };
 
 exports.addPartnerForm = (req, res, next) => {
     res.render('new-partner')
-}
+};
+
+exports.addModuleForm = (req, res, next) => {
+    db.Module.findAll()
+    .then((modules) => {
+        res.render('new-module', { modules: modules})
+    })
+    .catch((err) => {
+        req.flash('error')
+        res.render('admin-index', {error : err})
+    })
+    
+};
 
 exports.newPartner = (req, res, next) => {
     let password = generator.generate({
@@ -56,25 +69,58 @@ exports.newPartner = (req, res, next) => {
 }
 // Détuire user en même temps que partner
 exports.deletePartner = async (req, res, next) => {
-   await db.Partner.findOne({
+    await db.Partner.findOne({
         where: { id: req.params.id }
     })
         .then((partner) => {
             const user = db.User.findOne({
-                where: {id : partner.UserId}
+                where: { id: partner.UserId }
             })
             partner.destroy();
             return user
         })
-        .then( (user) => {
+        .then((user) => {
             user.destroy();
         })
         .then(() => {
             req.flash('message', 'Le partenaire a bien été supprimé ')
-            res.render('admin-index', {message: req.flash('message')});
+            res.render('admin-index', { message: req.flash('message') });
         })
         .catch((err) => {
             req.flash('error')
             res.render('admin-index', { error: err })
+        })
+}
+
+exports.newModule = (req, res, next) => {
+    const module = new db.Module({
+        name: req.body.name,
+        description: req.body.description
+    })
+    module.save()
+        .then((module) => {
+            req.flash('message', 'Le module a bien été créé ')
+            res.render('new-module', { message: req.flash('message') });
+        })
+        .catch((err) => {
+            req.flash('error')
+            res.render('new-module', { error: err })
+        })
+}
+
+exports.deleteModule = async (req, res, next) => {
+    await db.Module.findOne({
+        where: {id: req.params.id}
+    })
+        .then((module) => {
+            module.destroy()
+        })
+        .then(() => {
+            req.flash('message', 'Le module a bien été supprimé ')
+            res.render('new-module', { message: req.flash('message') });
+        })
+        .catch((err) => {
+            req.flash('error')
+            res.render('new-module', { error: err })
         })
 }
