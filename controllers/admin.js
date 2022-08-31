@@ -10,8 +10,8 @@ exports.getAllPartners = (req, res, next) => {
             res.render('admin-index', { partners: partners })
         })
         .catch((err) => {
-            req.flash('error')            
-            res.render('admin-index', {error : err});
+            req.flash('error')
+            res.render('admin-index', { error: err });
         })
 };
 
@@ -21,14 +21,14 @@ exports.addPartnerForm = (req, res, next) => {
 
 exports.addModuleForm = (req, res, next) => {
     db.Module.findAll()
-    .then((modules) => {
-        res.render('new-module', { modules: modules})
-    })
-    .catch((err) => {
-        req.flash('error')
-        res.render('admin-index', {error : err})
-    })
-    
+        .then((modules) => {
+            res.render('new-module', { modules: modules })
+        })
+        .catch((err) => {
+            req.flash('error')
+            res.render('admin-index', { error: err })
+        })
+
 };
 
 exports.newPartner = (req, res, next) => {
@@ -108,9 +108,9 @@ exports.newModule = (req, res, next) => {
         })
 }
 
-exports.deleteModule = async (req, res, next) => {
-    await db.Module.findOne({
-        where: {id: req.params.id}
+exports.deleteModule = (req, res, next) => {
+    db.Module.findOne({
+        where: { id: req.params.id }
     })
         .then((module) => {
             module.destroy()
@@ -122,5 +122,46 @@ exports.deleteModule = async (req, res, next) => {
         .catch((err) => {
             req.flash('error')
             res.render('new-module', { error: err })
+        })
+}
+
+exports.getOnePartnerUpdateForm = (req, res, next) => {
+    db.Partner.findOne({
+        where: { id: req.params.id }
+    })
+        .then((partner) => {
+            db.Module.findAll()
+                .then((modules) => {
+                    res.render('update-partner', {
+                        partner: partner,
+                        modules: modules
+                    })
+                })
+        })
+        .catch((err) => {
+            req.flash('error')
+            res.render('update-partner', { error: err })
+        })
+
+}
+
+exports.updateOnePartner = (req, res, next) => {
+    db.partner.findOne({
+        where: { id : req.params.id },
+        include: db.module
+    })
+        .then((partner) => {
+            partner.set({
+                name: req.body.name,
+                email: req.body.email,
+                description: req.body.description,
+                image_url: req.body.image_url,
+                is_active: req.body.is_active
+            })           
+             partner.setModules(req.body.module)
+             return partner                       
+        })
+        .then((partner) => {
+            partner.save();
         })
 }

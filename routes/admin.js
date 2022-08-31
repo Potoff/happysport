@@ -17,6 +17,8 @@ router.post('/newModule', adminCtrl.newModule);
 
 router.get('/deleteModule/:id', adminCtrl.deleteModule);
 
+router.get('/getUpdatePartnerForm/:id', adminCtrl.getOnePartnerUpdateForm);
 
+router.post('/updatePartner/:id', adminCtrl.updateOnePartner);
 
 module.exports = router;
