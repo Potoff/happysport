@@ -5,9 +5,16 @@ const bcrypt = require('bcrypt');
 
 
 exports.getAllPartners = (req, res, next) => {
-    db.Partner.findAll()
+    db.partner.findAll({ include: db.module })
         .then((partners) => {
-            res.render('admin-index', { partners: partners })
+            db.module.findAll({ include: db.partner })
+                .then((modules) => {
+                    res.render('admin-index', {
+                        partners: partners,
+                        modules: modules
+                    })
+                })
+
         })
         .catch((err) => {
             req.flash('error')
@@ -126,11 +133,11 @@ exports.deleteModule = (req, res, next) => {
 }
 
 exports.getOnePartnerUpdateForm = (req, res, next) => {
-    db.Partner.findOne({
+    db.partner.findOne({
         where: { id: req.params.id }
-    })
+    },{include: db.partner})
         .then((partner) => {
-            db.Module.findAll()
+            db.module.findAll({include: db.partner})
                 .then((modules) => {
                     res.render('update-partner', {
                         partner: partner,
@@ -147,7 +154,7 @@ exports.getOnePartnerUpdateForm = (req, res, next) => {
 
 exports.updateOnePartner = (req, res, next) => {
     db.partner.findOne({
-        where: { id : req.params.id },
+        where: { id: req.params.id },
         include: db.module
     })
         .then((partner) => {
@@ -157,11 +164,15 @@ exports.updateOnePartner = (req, res, next) => {
                 description: req.body.description,
                 image_url: req.body.image_url,
                 is_active: req.body.is_active
-            })           
-             partner.setModules(req.body.module)
-             return partner                       
+            })
+            if (req.body.module) {
+                partner.setModules(req.body.module)
+                return partner
+            }
+            return partner
         })
         .then((partner) => {
             partner.save();
+            res.redirect('/admin');
         })
 }

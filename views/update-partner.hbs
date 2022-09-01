@@ -65,41 +65,56 @@
     <form method="post" action="/admin/updatePartner/{{partner.id}}">
         <div class="mb-3">
             <label for="name" class="form-label">Nom du partenaire</label>
-            <input type="text" class="form-control" id="name" aria-describedby="emailHelp" name="name">
+            <input type="text" class="form-control" id="name" aria-describedby="emailHelp" name="name"
+                value="{{partner.name}}" required>
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Adresse Mail</label>
-            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email"
+                value="{{partner.email}}" required>
             <div id="emailHelp" class="form-text">Merci de choisir le nom de la franchise comme suit :
                 "nom@happysport.com"</div>
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea name="description" id="description" cols="15" rows="4" class="form-control"></textarea>
+            <textarea name="description" id="description" cols="15" rows="4" class="form-control"
+                required>{{partner.description}}</textarea>
         </div>
         <div class="mb-3">
             <label for="image_url" class="form-label">Image</label>
-            <input type="text" class="form-control" id="image_url" aria-describedby="emailHelp" name="image_url">
+            <input type="text" class="form-control" id="image_url" aria-describedby="emailHelp" name="image_url"
+                value="{{partner.image_url}}" required>
             <div id="emailHelp" class="form-text">Veuillez indiquer l'url de l'image</div>
         </div>
+        {{#if partner.is_active}}
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="is_active" id="active" value="true">
+            <input class="form-check-input" type="radio" name="is_active" id="active" value="true" checked>
             <label class="form-check-label" for="active">Actif</label>
         </div>
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="is_active" id="inactive" value="false">
             <label class="form-check-label mb-3" for="inactive">Inactif</label>
         </div>
+        {{else}}
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="is_active" id="active" value="true">
+            <label class="form-check-label" for="active">Actif</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="is_active" id="inactive" value="false" checked>
+            <label class="form-check-label mb-3" for="inactive">Inactif</label>
+        </div>
+        {{/if}}
         <div class="d-flex justify-content-between flex-wrap">
             <h6>Choix des modules :</h6>
-            {{#each modules}}
+            {{#modules}}
             <div class="form-check mb-3">
                 <input class="form-check-input" type="checkbox" value="{{id}}" id="module" name="module">
                 <label class="form-check-label" for="module">
                     {{name}}
                 </label>
             </div>
-            {{/each}}
+            {{/modules}}
         </div>
         <button type="submit" class="btn btn-success">Valider</button>
     </form>

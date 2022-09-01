@@ -5,13 +5,11 @@ module.exports = (sequelize, Sequelize) => {
         name:{
             type: Sequelize.STRING,
             allowNull: false,
-            unique: true,
             notEmpty: true
         },
         email:{
             type: Sequelize.STRING,
             allowNull: false,
-            unique: true,
             notEmpty: true
         },
         description:{
