@@ -19,15 +19,17 @@ const salleRouter = require('./routes/salle');
 // App Middleware
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')));
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+
+
 
 
 app.use(session({
-    secret: 'rabbit chiasse',
+    secret: 'rabbit hole is the new cassoulet',
     resave: true,
     saveUninitialized: true
 }));
@@ -43,12 +45,12 @@ app.use(passport.session());
 app.use('/user', userRouter);
 app.use('/admin', (req, res, next) => {
     if (req.isAuthenticated() && req.user.RoleId === 1) {
-        console.log(req.session)
         return next()
     }
     req.flash('error', 'Vous devez être connecté et administrateur pour acceder à cette page !')
     res.render('index', { message: req.flash('error') })
 }, adminRouter);
+
 app.use('/franchise', (req, res, next) => {
     if (req.isAuthenticated() && req.user.RoleId === 2) {
         return next()
@@ -56,6 +58,7 @@ app.use('/franchise', (req, res, next) => {
     req.flash('error', 'Vous devez être connecté et administrateur de franchise pour acceder à cette page !')
     res.render('index', { message: req.flash('error') })
 }, franchiseRouter);
+
 app.use('/salle',(req, res, next) => {
     if(req.isAuthenticated() && req.user.RolId === 3){
         return next()
@@ -63,6 +66,7 @@ app.use('/salle',(req, res, next) => {
     req.flash('error', 'Vous devez être connecté être gérant de salle pour acceder à cette page !')
     res.render('index', { message: req.flash('error') })
 } ,salleRouter);
+
 app.use('/', indexRouter);
 app.use('/logout', (req, res, next) => {
     req.logout(() => {

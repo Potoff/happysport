@@ -15,12 +15,6 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-sequelize.sync()
-  .then( () => console.log('Postgres synchro tonton, c\'est bieng !'))
-  .catch((err) => {
-    console.log({err: err})
-  });
-
 fs
   .readdirSync(__dirname)
   .filter(file => {
@@ -41,7 +35,10 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 db.user = require('./user')(sequelize, Sequelize);
 db.role = require('./role')(sequelize, Sequelize);
+db.partner = require('./partner')(sequelize, Sequelize);
+db.module = require('./module')(sequelize, Sequelize);
 
+//Association between role and user
 db.role.hasMany(db.user, { as: "Users"});
 db.user.belongsTo(db.role, {
   foreignKey:{
@@ -50,5 +47,18 @@ db.user.belongsTo(db.role, {
   },
   as: "Role"
 });
+//Association 1:N between user and partner
+db.user.hasOne(db.partner);
+db.partner.belongsTo(db.user)
+
+//Association N:N between partner and modules
+db.partner.belongsToMany(db.module, { through: 'Partner_Modules'});
+db.module.belongsToMany(db.partner, { through: 'Partner_Modules'});
+
+sequelize.sync()
+  .then( () => console.log('Postgres synchro tonton, c\'est bieng !'))
+  .catch((err) => {
+    console.log({err: err})
+  });
 
 module.exports = db;

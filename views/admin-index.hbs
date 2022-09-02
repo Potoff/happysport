@@ -17,10 +17,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Ajouter un partenaire</a>
+                        <a class="nav-link" aria-current="page" href="/admin/addPartnerForm">Ajouter un partenaire</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Modules</a>
+                        <a class="nav-link" href="/admin/addModuleForm">Modules</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#'">Salles</a>
@@ -36,7 +36,66 @@
 <div class="container">
     {{!-- Search bar --}}
 
-    <input class="form-control mt-5" list="datalistOptions" id="exampleDataList" placeholder="Chercher un partenaire ... ">
-
-
+    <input class="form-control mt-5" list="datalistOptions" id="exampleDataList"
+        placeholder="Chercher un partenaire ... ">
+    <div class="container-fluid mt-4 d-flex justify-content-center align-items-center flex-wrap">
+        {{#if message}}
+        <div class="d-flex flex-column align-items-center">
+            <div class="alert alert-success mt-4 mb-5" role="alert">
+                <p class="text-center">{{message}}</p>
+            </div>
+            <a href="/admin">
+                <button type="button" class="btn btn-dark">Retour à la liste des partenaires</button>
+            </a>
+        </div>
+        {{/if}}
+        {{#if error}}
+        <div class="d-flex flex-column align-items-center">
+            <div class="alert alert-danger mt-4 mb-5" role="alert">
+                <p class="text-center">{{error}}</p>
+            </div>
+            <a href="/admin">
+                <button type="button" class="btn btn-dark">Retour à la liste des partenaires</button>
+            </a>
+        </div>
+        {{/if}}
+        {{#partners}}
+        <div class="card mt-2 mx-2" style="width: 18rem;">
+            <a href="/admin/getPartner/{{id}}">
+                <img class="card-img-top" src={{image_url}} alt="Card image cap">
+            </a>
+            <div class="card-body">
+                <h5 class="card-title">{{name}}</h5>
+                <p class="card-text">{{description}}</p>
+                <p class="card-text mb-3">{{email}}</p>
+                <div class="card mb-3">
+                    <h6 class="h6 p-2 text-center">Liste des modules actifs : </h6>
+                    <ul class="list-group list-group-flush text-center">
+                        {{#Modules}}
+                        <li class="list-group-item">{{name}}</li>
+                        {{/Modules}}
+                    </ul>
+                </div>
+                <a href="/admin/getUpdatePartnerForm/{{id}}" class="btn btn-warning"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path
+                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                    </svg></a>
+                <a href="/admin/deletePartner/{{id}}" class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg"
+                        width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path
+                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                        <path fill-rule="evenodd"
+                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                    </svg></a>
+                {{#if is_active}}
+                <button type="button" class="btn btn-success disabled">Actif</button>
+                {{else}}
+                <button type="button" class="btn btn-secondary disabled">Inactif</button>
+                {{/if}}
+            </div>
+        </div>
+        {{/partners}}
+    </div>
 </div>

@@ -1,0 +1,89 @@
+{{!-- Navbar --}}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid ">
+        <div class="d-flex justify-content-between w-100">
+            <div class="d-flex justify-content-start align-items-center text-light">
+                <img src="images/logo-haltere.png" alt=""
+                    class="border rounded rounded-5 border-2 border-dark border-opacity-25 rounded-circle p-1 haltere">
+                <h1 class="ms-4">HappySport</h1>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin">Retour</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Déconnexion</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<h2 class="text-center mt-4">Gestion des modules</h2>
+<div class="container mt-5">
+    {{#if message}}
+    <div class="d-flex flex-column align-items-center">
+        <div class="alert alert-success mt-4 mb-4" role="alert">
+            <p class="text-center">{{message}}</p>
+        </div>
+        <a href="/admin/addModuleForm">
+            <button type="button" class="btn btn-dark">Afficher la liste des modules</button>
+        </a>
+    </div>
+    {{/if}}
+    {{#if error}}
+    <div class="alert alert-danger mt-4" role="alert">
+        <p class="text-center">{{error}}</p>
+    </div>
+    {{/if}}
+
+
+    <div class="list-group mb-6">
+        {{#each modules}}
+        <div class="list-group-item list-group-item-action flex-column align-items-start d-flex">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{name}}</h5>
+            </div>
+            <p class="mb-1">{{description}}</p>
+            <div class="align-self-end">
+                <a href="#" class="btn btn-warning"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path
+                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                    </svg></a>
+                <a href="/admin/deleteModule/{{id}}" class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg"
+                        width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path
+                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                        <path fill-rule="evenodd"
+                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                    </svg></a>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+
+    <div class="p-5 container">
+        <form method="post" action="/admin/newModule">
+            <h3 class="text-center mt-5">Ajouter un nouveau module</h3>
+            <div class="mb-3">
+                <label for="name" class="form-label">Nom du module</label>
+                <input type="text" class="form-control" id="name" aria-describedby="emailHelp" name="name">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea name="description" id="description" cols="15" rows="4" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Valider</button>
+        </form>
+    </div>
+</div>
