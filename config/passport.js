@@ -23,14 +23,14 @@ passport.use(new LocalStrategy(
       .then((user) => {
         if(!user){
           return done(null, false, {
-            messages: 'Utilisateur inconnu'
+            message: 'Utilisateur inconnu'
           })
         }
         bcrypt.compare(req.body.password, user.password)
           .then((valid) => {
             if(!valid){
               return done(null, false, {
-                messages: 'Mot de passe invalide'          
+                message: 'Mot de passe invalide'          
               })
             } else {
               return done(null, user);

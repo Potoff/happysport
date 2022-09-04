@@ -10,6 +10,11 @@
                 <p class="text-center">{{message}}</p>
             </div>
             {{/if}}
+            {{#if error}}
+            <div class="alert alert-danger mt-4 text-center">
+                <p class="text-center">{{error}}</p>
+            </div>
+            {{/if}}
         <form method="POST" action="/user/login">
             <div class="mb-3">
                 <label for="email" class="form-label" name="email">Adresse Mail :</label>
