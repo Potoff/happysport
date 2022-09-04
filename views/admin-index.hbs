@@ -22,8 +22,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/addModuleForm">Modules</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#'">Salles</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Salles</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Liste des salles</a></li>
+                            <li><a class="dropdown-item" href="#">Ajouter une salle</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Déconnexion</a>
@@ -33,9 +38,9 @@
         </div>
     </div>
 </nav>
-<div class="container">
-    {{!-- Search bar --}}
 
+<div class="container">
+    {{!-- Search bar --}}    
     <input class="form-control mt-5" list="datalistOptions" id="exampleDataList"
         placeholder="Chercher un partenaire ... ">
     <div class="container-fluid mt-4 d-flex justify-content-center align-items-center flex-wrap">
@@ -90,9 +95,9 @@
                             d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                     </svg></a>
                 {{#if is_active}}
-                <button type="button" class="btn btn-success disabled">Actif</button>
+                <span class="badge rounded-pill text-bg-success">Actif</span>
                 {{else}}
-                <button type="button" class="btn btn-secondary disabled">Inactif</button>
+                <span class="badge rounded-pill text-bg-secondary">Inactif</span>
                 {{/if}}
             </div>
         </div>

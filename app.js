@@ -7,6 +7,7 @@ const passport = require('passport');
 const session = require('express-session');
 const flash = require('connect-flash-plus');
 const passportConfig = require('./config/passport');
+const hbs = require('hbs')
 
 // Router Constantes
 const indexRouter = require('./routes/index');
@@ -20,8 +21,8 @@ const salleRouter = require('./routes/salle');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')));
-app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')));
+app.use('/css', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css')));
+app.use('/js', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

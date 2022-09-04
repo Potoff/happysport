@@ -134,13 +134,19 @@ exports.deleteModule = (req, res, next) => {
 
 exports.getOnePartnerUpdateForm = (req, res, next) => {
     db.partner.findOne({
-        where: { id: req.params.id }
-    },{include: db.partner})
+        where: { id: req.params.id },
+        include: [{
+            model: db.module,
+            through: { attributes: [] }
+        }]
+    })
         .then((partner) => {
-            db.module.findAll({include: db.partner})
+            console.log(partner.Modules.name)
+            db.module.findAll({ include: db.partner })
                 .then((modules) => {
                     res.render('update-partner', {
                         partner: partner,
+                        partnerModules: partner.Modules,
                         modules: modules
                     })
                 })
@@ -155,7 +161,10 @@ exports.getOnePartnerUpdateForm = (req, res, next) => {
 exports.updateOnePartner = (req, res, next) => {
     db.partner.findOne({
         where: { id: req.params.id },
-        include: db.module
+        include: [{
+            model: db.module,
+            through: { attributes: [] }
+        }]
     })
         .then((partner) => {
             partner.set({
@@ -166,10 +175,13 @@ exports.updateOnePartner = (req, res, next) => {
                 is_active: req.body.is_active
             })
             if (req.body.module) {
-                partner.setModules(req.body.module)
+                partner.setModules(req.body.module);
                 return partner
+            } else {
+                partner.removeModules(partner.Modules)
+                return partner    
             }
-            return partner
+
         })
         .then((partner) => {
             partner.save();
