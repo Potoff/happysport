@@ -13,11 +13,11 @@ router.get('/newHallForm', adminCtrl.newHallForm);
 
 router.post('/newPartner', adminCtrl.newPartner);
 
-router.get('/deletePartner/:id', adminCtrl.deletePartner);
+router.post('/deletePartner/:id', adminCtrl.deletePartner);
 
 router.post('/newModule', adminCtrl.newModule);
 
-router.get('/deleteModule/:id', adminCtrl.deleteModule);
+router.post('/deleteModule/:id', adminCtrl.deleteModule);
 
 router.get('/getUpdatePartnerForm/:id', adminCtrl.getOnePartnerUpdateForm);
 
@@ -29,5 +29,6 @@ router.get('/allHall', adminCtrl.getAllHall)
 
 router.get('/getPartner/:id', adminCtrl.getOnePartner)
 
+router.post('/updateModule/:id', adminCtrl.updateModule)
 
 module.exports = router;

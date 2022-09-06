@@ -4,6 +4,7 @@ const generator = require('generate-password');
 const bcrypt = require('bcrypt');
 
 
+
 exports.getAllPartners = (req, res, next) => {
     db.partner.findAll({ include: db.module })
         .then((partners) => {
@@ -48,6 +49,7 @@ exports.addModuleForm = (req, res, next) => {
 };
 
 exports.newPartner = (req, res, next) => {
+    let email = req.body.name.split(' ').join('').toLowerCase() + '@happysport.com'
     let password = generator.generate({
         length: 10,
         numbers: true
@@ -55,7 +57,7 @@ exports.newPartner = (req, res, next) => {
     bcrypt.hash(password, 10)
         .then((password) => {
             const user = new db.User({
-                email: req.body.email,
+                email: email,
                 password: password,
                 RoleId: 2
             })
@@ -74,7 +76,7 @@ exports.newPartner = (req, res, next) => {
                 })
         })
         .then(() => {
-            req.flash('message', 'Le nouveau partenaire a bien été enregistré avec le mot de passe suivant : ' + password)
+            req.flash('message', 'Le nouveau partenaire a bien été enregistré avec le mot de passe suivant : ' + password + ' et l\'adresse mail suivante : ' + email)
             res.render('new-partner', { message: req.flash('message') });
         })
         .catch((err) => {
@@ -116,6 +118,28 @@ exports.newModule = (req, res, next) => {
         .then((module) => {
             req.flash('message', 'Le module a bien été créé ')
             res.render('new-module', { message: req.flash('message') });
+        })
+        .catch((err) => {
+            req.flash('error')
+            res.render('new-module', { error: err })
+        })
+};
+
+exports.updateModule = (req, res, next) => {
+    db.module.findOne({
+        where: { id: req.params.id }
+    })
+        .then((module) => {
+            module.set({
+                name: req.body.name,
+                description: req.body.description
+            })
+            return module
+        })
+        .then((module) => {
+            module.save()
+            req.flash('message', 'Le module a bien été modifié')
+            res.render('new-module', {message: req.flash('message')})
         })
         .catch((err) => {
             req.flash('error')
@@ -170,10 +194,27 @@ exports.updateOnePartner = (req, res, next) => {
         where: { id: req.params.id },
         include: [{
             model: db.module,
-            through: { attributes: [] }
+            through: { attributes: [] },
+            include: [{
+                model: db.hall,
+                through: { attributes: [] }
+            }]
         }]
     })
         .then((partner) => {
+            if (req.body.is_active === 'false') {
+                db.hall.findAll({
+                    where: { PartnerId: partner.id }
+                }).then((partnersHalls) => {
+                    partnersHalls.forEach(hall => {
+                        hall.update({
+                            is_active: 'false'
+                        })
+                    });
+                    return partner;
+                })
+            }
+
             partner.set({
                 name: req.body.name,
                 email: req.body.email,
@@ -181,10 +222,12 @@ exports.updateOnePartner = (req, res, next) => {
                 image_url: req.body.image_url,
                 is_active: req.body.is_active
             })
+
             if (req.body.module) {
                 partner.setModules(req.body.module);
                 return partner
-            } else {
+            }
+            else {
                 partner.removeModules(partner.Modules)
                 return partner
             }
@@ -196,7 +239,7 @@ exports.updateOnePartner = (req, res, next) => {
         })
         .catch((err) => {
             req.flash('error')
-            res.render('/admin', { error: err })
+            res.render('admin-index', { error: err })
         })
 };
 
@@ -208,13 +251,13 @@ exports.getOnePartner = (req, res, next) => {
             through: { attributes: [] }
         }]
     })
-    .then((partner) => {
-        res.render('get-partner', {partner: partner})
-    })
-    .catch((err) => {
-        req.flash('error')
-        res.render('/admin', {error: err})
-    })
+        .then((partner) => {
+            res.render('get-partner', { partner: partner })
+        })
+        .catch((err) => {
+            req.flash('error')
+            res.render('/admin', { error: err })
+        })
 };
 
 exports.newHall = (req, res, next) => {

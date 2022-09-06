@@ -38,7 +38,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.BOOLEAN,
             allowNull: false,
             notEmpty: true,
-            defaultValue: "true"
+            defaultValue: "false"
         },
         UserId:{
             type: Sequelize.INTEGER,

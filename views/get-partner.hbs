@@ -32,9 +32,16 @@
     {{#partner}}
     <div class="mb-3">
         <img src={{image_url}} alt=""
-            class="img-fluid w-75 border rounded rounded-1 border-1 border-dark border-opacity-25 rounded-circle">
+            class="img-fluid w-75 border rounded rounded-4 border-1 border-dark border-opacity-25">
     </div>
     <div>
+        <div>
+            {{#if is_active}}
+            <span class="badge rounded-pill text-bg-success">Actif</span>
+            {{else}}
+            <span class="badge rounded-pill text-bg-secondary">Inactif</span>
+            {{/if}}
+        </div>
         <h2 class="mb-3"><u>{{name}}</u></h2>
         <p class="mb-3">{{description}}</p>
         <p class="mb-3">{{email}}</p>
@@ -45,13 +52,6 @@
             <p class="fs-6 fst-italic">{{description}}</p>
             {{/Modules}}
         </ul>
-        <div>
-            {{#if is_active}}
-            <span class="badge rounded-pill text-bg-success">Actif</span>
-            {{else}}
-            <span class="badge rounded-pill text-bg-secondary">Inactif</span>
-            {{/if}}
-        </div>
     </div>
 
 
