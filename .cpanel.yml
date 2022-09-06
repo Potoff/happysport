@@ -1,0 +1,20 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/bips0889/happysport/
+    - /bin/cp -R config $DEPLOYPATH
+    - /bin/cp -R controllers $DEPLOYPATH
+    - /bin/cp -R middlewares $DEPLOYPATH
+    - /bin/cp -R models $DEPLOYPATH
+    - /bin/cp -R public $DEPLOYPATH
+    - /bin/cp -R routes $DEPLOYPATH
+    - /bin/cp -R seeders $DEPLOYPATH
+    - /bin/cp -R views $DEPLOYPATH
+    - /bin/cp .gitignore $DEPLOYPATH
+    - /bin/cp app.js $DEPLOYPATH
+    - /bin/cp index.js $DEPLOYPATH
+    - /bin/cp package-lock.json $DEPLOYPATH
+    - /bin/cp package.json $DEPLOYPATH
+    
+    
+    
+    
