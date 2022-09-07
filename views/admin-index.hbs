@@ -40,12 +40,8 @@
 </nav>
 
 <div class="container">
-    <h2 class="text-center mt-2">Tout les partenaires : </h2>
-    {{!-- Search bar --}}
-    <input class="form-control mt-5" list="datalistOptions" id="exampleDataList"
-        placeholder="Chercher une franchise ... ">
-    <div class="container-fluid mt-4 d-flex justify-content-center align-items-center flex-wrap">
-        {{#if message}}
+    <h2 class="text-center mt-2 mb-2">Tout les partenaires : </h2>
+    {{#if message}}
         <div class="d-flex flex-column align-items-center">
             <div class="alert alert-success mt-4 mb-5" role="alert">
                 <p class="text-center">{{message}}</p>
@@ -65,6 +61,11 @@
             </a>
         </div>
         {{/if}}
+    {{!-- Search bar --}}
+    <input class="form-control mt-5" list="datalistOptions" id="exampleDataList"
+        placeholder="Chercher une franchise ... ">
+    <div class="container-fluid mt-4 d-flex justify-content-center align-items-center flex-wrap">
+        
         {{#partners}}
         <div class="card mt-2 mx-2 h-100" style="width: 18rem;">
             <img class="card-img-top" src={{image_url}} alt="Card image cap">

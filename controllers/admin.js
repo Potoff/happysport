@@ -195,11 +195,13 @@ exports.updateOnePartner = (req, res, next) => {
         include: [{
             model: db.module,
             through: { attributes: [] },
-            include: [{
-                model: db.hall,
-                through: { attributes: [] }
-            }]
-        }]
+        },
+        {
+            model: db.hall,
+            as: 'Halls',
+            include: [db.module]
+        }
+    ]
     })
         .then((partner) => {
             if (req.body.is_active === 'false') {
@@ -228,7 +230,11 @@ exports.updateOnePartner = (req, res, next) => {
                 return partner
             }
             else {
-                partner.removeModules(partner.Modules)
+                partner.Halls.forEach((hall) => {
+                    
+                    hall.removeModules(partner.Modules)
+                })
+                partner.removeModules(partner.Modules);
                 return partner
             }
 
@@ -316,9 +322,86 @@ exports.getAllHall = (req, res, next) => {
         include: [{
             model: db.partner,
             as: 'Partner',
+            include: [db.module]
+        },{
+            model: db.module
         }]
     })
         .then((halls) => {
             res.render('all-hall', { hall: halls })
+            })       
+};
+
+exports.updateHall = (req, res, next) => {
+    db.hall.findOne({
+        where: {id: req.params.id},
+        include: [db.module]
+    })
+    .then((hall) => {
+        hall.set({
+            name: req.body.name,
+            description: req.body.description,
+            street: req.body.street,
+            postal_code: req.body.postal_code,
+            city: req.body.city,
+            image_url: req.body.image_url,
+            is_active: req.body.is_active
         })
+
+        if (req.body.module) {
+            hall.setModules(req.body.module);
+            return hall
+        }
+        else {
+            hall.removeModules(hall.Modules)
+            return hall
+        }
+    })
+    .then((hall) => {
+        hall.save()
+        req.flash('message', 'La salle a bien été modifiée')
+        res.render('all-hall', {message: req.flash('message')})   
+    })
+    .catch((err) => {
+        req.flash('error')
+        res.render('all-hall', {error: err})
+    })
+};
+
+exports.deleteHall = (req, res, next) => {
+    db.hall.findOne({
+        where: { id: req.params.id }
+    })
+        .then((hall) => {
+            hall.destroy()
+        })
+        .then(() => {
+            req.flash('message', 'La salle a bien été supprimée ')
+            res.render('all-hall', { message: req.flash('message') });
+        })
+        .catch((err) => {
+            req.flash('error')
+            res.render('all-hall', { error: err })
+        })
+};
+
+exports.getHall = (req, res, next) => {
+    db.hall.findOne({
+        where: {id: req.params.id},
+        include: [{
+            model: db.partner,
+            as: 'Partner',
+            include: [db.module]
+        },{
+            model: db.module
+        }]
+    })
+    .then((hall) => {
+        console.log(hall)
+        res.render('get-hall', {hall: hall})
+    })
+    .catch((err) => {
+        req.flash('error')
+        res.render('get-hall', { error: err })
+    })
 }

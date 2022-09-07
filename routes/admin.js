@@ -23,12 +23,18 @@ router.get('/getUpdatePartnerForm/:id', adminCtrl.getOnePartnerUpdateForm);
 
 router.post('/updatePartner/:id', adminCtrl.updateOnePartner);
 
-router.post('/newHall', adminCtrl.newHall)
+router.post('/newHall', adminCtrl.newHall);
 
-router.get('/allHall', adminCtrl.getAllHall)
+router.get('/allHall', adminCtrl.getAllHall);
 
-router.get('/getPartner/:id', adminCtrl.getOnePartner)
+router.get('/getPartner/:id', adminCtrl.getOnePartner);
 
-router.post('/updateModule/:id', adminCtrl.updateModule)
+router.post('/updateModule/:id', adminCtrl.updateModule);
+
+router.post('/updateHall/:id', adminCtrl.updateHall);
+
+router.post('/deleteHall/:id', adminCtrl.deleteHall);
+
+router.get('/getHall/:id', adminCtrl.getHall);
 
 module.exports = router;

@@ -1,0 +1,61 @@
+{{!-- Navbar --}}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid ">
+        <div class="d-flex justify-content-between w-100">
+            <div class="d-flex justify-content-start align-items-center text-light">
+                <img src="/images/logo-haltere.png" alt=""
+                    class="border rounded rounded-5 border-2 border-dark border-opacity-25 rounded-circle p-1 haltere">
+                <h1 class="ms-4">HappySport</h1>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/allHall">Retour</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Déconnexion</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container text-center mt-5 d-md-flex justify-content-between align-items-center">
+    {{#hall}}
+    <div class="mb-3">
+        <img src={{image_url}} alt=""
+            class="img-fluid w-75 border rounded rounded-4 border-1 border-dark border-opacity-25">
+    </div>
+    <div>
+        <div>
+            {{#if is_active}}
+            <span class="badge rounded-pill text-bg-success">Actif</span>
+            {{else}}
+            <span class="badge rounded-pill text-bg-secondary">Inactif</span>
+            {{/if}}
+        </div>
+        <h2 class="mb-3"><u>{{name}}</u></h2>
+        <h3>{{Partner.name}}</h3>
+        <p class="mb-3">{{description}}</p>
+        <p class="mb-3">{{email}}</p>
+        <p class="mb-3">{{street}}</p>
+        <p class="mb-3">{{postal_code}}</p>
+        <p class="mb-3">{{city}}</p>
+        <h6 class="h6 p-2 text-center"><u> Liste des modules actifs : </u></h6>
+        <ul class="list-group list-group-flush text-center mb-3">
+            {{#Modules}}
+            <li class="list-group-item fs-5 fw-bold">{{name}}</li>
+            <p class="fs-6 fst-italic">{{description}}</p>
+            {{/Modules}}
+        </ul>
+    </div>
+    {{/hall}}
+</div>

@@ -32,17 +32,14 @@
 </nav>
 
 <div class="container">
-    <h2 class="text-center mt-2">Toutes les salles : </h2>
-    {{!-- Search bar --}}
-    <input class="form-control mt-5" list="datalistOptions" id="exampleDataList" placeholder="Chercher une salle ... ">
-    <div class="container-fluid mt-4 d-flex justify-content-center align-items-center flex-wrap">
-        {{#if message}}
+    <h2 class="text-center mt-2 mb-4">Toutes les salles : </h2>
+    {{#if message}}
         <div class="d-flex flex-column align-items-center">
             <div class="alert alert-success mt-4 mb-5" role="alert">
                 <p class="text-center">{{message}}</p>
             </div>
-            <a href="/admin">
-                <button type="button" class="btn btn-dark">Retour à la liste des partenaires</button>
+            <a href="/admin/allHall">
+                <button type="button" class="btn btn-dark">Retour à la liste des salles</button>
             </a>
         </div>
         {{/if}}
@@ -51,22 +48,26 @@
             <div class="alert alert-danger mt-4 mb-5" role="alert">
                 <p class="text-center">{{error}}</p>
             </div>
-            <a href="/admin">
+            <a href="/admin/allHall">
                 <button type="button" class="btn btn-dark">Retour à la liste des partenaires</button>
             </a>
         </div>
         {{/if}}
+    {{!-- Search bar --}}
+    <input class="form-control mt-5" list="datalistOptions" id="exampleDataList" placeholder="Chercher une salle ... ">
+    <div class="container-fluid mt-4 d-flex justify-content-center align-items-center flex-wrap">
+        
         {{#hall}}
         <div class="card mt-2 mx-2 text-center" style="width: 18rem;">
             <div class="card-header">
                 <h4>{{name}}</h4>
-                    <img class="card-img-top rounded" src={{image_url}} alt="Card image cap">
+                <img class="card-img-top rounded" src={{image_url}} alt="Card image cap">
             </div>
             <div class="card-body">
                 {{#Partner}}
                 <h5 class="card-title"><u>{{name}}</u></h5>
                 {{/Partner}}
-                
+
                 <p class="card-text">{{street}}</p>
                 <p class="card-text">{{city}}</p>
                 <p class="card-text mb-3">{{email}}</p>
@@ -74,21 +75,21 @@
                 </div>
                 <div class="d-flex justify-content-between">
                     <div class="d-flex justify-content-between w-50">
-                        <a type="button" data-bs-toggle="modal" data-bs-target="#updateModal" class="badge rounded-pill bg-dark"><svg
-                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-pencil" viewBox="0 0 16 16">
+                        <a type="button" data-bs-toggle="modal" data-bs-target="#updateModal"
+                            class="badge rounded-pill bg-dark"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                 <path
                                     d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                             </svg></a>
-                        <a type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" class="badge rounded-pill bg-dark"><svg
-                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-trash" viewBox="0 0 16 16">
+                        <a type="button" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                            class="badge rounded-pill bg-dark"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                 <path
                                     d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                                 <path fill-rule="evenodd"
                                     d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                             </svg></a>
-                        <a href="/admin/getPartner/{{id}}" class="badge rounded-pill bg-dark"><svg
+                        <a href="/admin/getHall/{{id}}" class="badge rounded-pill bg-dark"><svg
                                 xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-eye" viewBox="0 0 16 16">
                                 <path
@@ -107,67 +108,123 @@
                 </div>
             </div>
         </div>
-            {{!-- Update Modal --}}
-<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modifier le module</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="post" action="/admin/updateModule/{{id}}">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Nom du module</label>
-                        <input type="text" class="form-control" id="name" aria-describedby="emailHelp" name="name" value="{{name}}">
+        {{!-- Update Modal --}}
+        <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modifier la salle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea name="description" id="description" cols="5" rows="2" class="form-control">{{description}}</textarea>
+                    <div class="modal-body">
+                        <form method="post" action="/admin/updateHall/{{id}}">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nom de la salle</label>
+                                <input type="text" class="form-control" id="name" aria-describedby="emailHelp"
+                                    name="name" value="{{name}}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea name="description" id="description" cols="5" rows="2"
+                                    class="form-control">{{description}}</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="image_url" class="form-label">Choisir une image de profil</label>
+                                <input type="text" class="form-control" id="image_url" aria-describedby="emailHelp"
+                                    name="image_url" value="{{image_url}}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="street" class="form-label">N° et Nom de rue</label>
+                                <input type="text" class="form-control" id="street" aria-describedby="emailHelp"
+                                    name="street" value="{{street}}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="postal_code" class="form-label">Code Postal</label>
+                                <input type="text" class="form-control" id="postal_code" aria-describedby="emailHelp"
+                                    name="postal_code" value="{{postal_code}}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="city" class="form-label">Ville</label>
+                                <input type="text" class="form-control" id="city" aria-describedby="emailHelp"
+                                    name="city" value="{{city}}">
+                            </div>
+                            {{#if is_active}}
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="is_active" id="active" value="true"
+                                    checked>
+                                <label class="form-check-label" for="active">Actif</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="is_active" id="inactive"
+                                    value="false">
+                                <label class="form-check-label mb-3" for="inactive">Inactif</label>
+                            </div>
+                            {{else}}
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="is_active" id="active" value="true">
+                                <label class="form-check-label" for="active">Actif</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="is_active" id="inactive"
+                                    value="false" checked>
+                                <label class="form-check-label mb-3" for="inactive">Inactif</label>
+                            </div>
+                            {{/if}}
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="d-flex flex-column justify-content-start">
+                                    <h6 class="mb-4">Modules déjà actifs : </h6>
+                                    {{#Modules}}
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" value="{{id}}" id="module"
+                                            name="module" checked disabled>
+                                        <label class="form-check-label" for="module">
+                                            {{name}}
+                                        </label>
+                                    </div>
+                                    {{/Modules}}
+                                </div>
+                                <div class="d-flex flex-column align-items-start">
+                                    <h6 class="mb-4">Choix des nouveaux modules : </h6>
+                                    {{#Partner.Modules}}
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" value="{{id}}" id="module"
+                                            name="module">
+                                        <label class="form-check-label" for="module">
+                                            {{name}}
+                                        </label>
+                                    </div>
+                                    {{/Partner.Modules}}
+                                </div>
+                            </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="image_url" class="form-label">Choisir une image de profil</label>
-                        <input type="text" class="form-control" id="image_url" aria-describedby="emailHelp" name="image_url" value="{{image_url}}">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-success">Valider</button>
+                        </form>
                     </div>
-                    <div class="mb-3">
-                        <label for="street" class="form-label">N° et Nom de rue</label>
-                        <input type="text" class="form-control" id="street" aria-describedby="emailHelp" name="street" value="{{street}}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="postal_code" class="form-label">Code Postal</label>
-                        <input type="text" class="form-control" id="postal_code" aria-describedby="emailHelp" name="postal_code" value="{{postal_code}}">
-                    </div>
-            </div>
-            </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                <button type="submit" class="btn btn-success">Valider</button>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-    {{!-- Delete Modal --}}
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Suppression définitive de la salle</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="post" action="/admin/deleteModule/{{id}}">
-                        <p class="fs-5">Etes vous sur de vouloir supprimer cette salle ?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
-                <button type="submit" class="btn btn-success">Valider</button>
-                </form>
+        {{!-- Delete Modal --}}
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Suppression définitive de la salle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="/admin/deleteHall/{{id}}">
+                            <p class="fs-5">Etes vous sur de vouloir supprimer cette salle ?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
+                        <button type="submit" class="btn btn-success">Valider</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
         {{/hall}}
     </div>
 </div>

@@ -56,37 +56,38 @@
             <h5 class="card-title">{{partner.name}}</h5>
             <p class="card-text">{{partner.description}}</p>
             {{#if partner.is_active}}
-            <button type="button" class="btn btn-success disabled">Actif</button>
+            <span class="badge rounded-pill text-bg-success">Actif</span>
             {{else}}
-            <button type="button" class="btn btn-secondary disabled">Inactif</button>
+            <span class="badge rounded-pill text-bg-secondary">Inactif</span>
             {{/if}}
         </div>
     </div>
-    <form method="post" action="/admin/updatePartner/{{partner.id}}">
+    {{#partner}}
+    <form method="post" action="/admin/updatePartner/{{id}}">
         <div class="mb-3">
             <label for="name" class="form-label">Nom du partenaire</label>
             <input type="text" class="form-control" id="name" aria-describedby="emailHelp" name="name"
-                value="{{partner.name}}" required>
+                value="{{name}}" required>
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Adresse Mail</label>
             <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email"
-                value="{{partner.email}}" required>
+                value="{{email}}" required>
             <div id="emailHelp" class="form-text">Merci de choisir le nom de la franchise comme suit :
                 "nom@happysport.com"</div>
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
             <textarea name="description" id="description" cols="15" rows="4" class="form-control"
-                required>{{partner.description}}</textarea>
+                required>{{description}}</textarea>
         </div>
         <div class="mb-3">
             <label for="image_url" class="form-label">Image</label>
             <input type="text" class="form-control" id="image_url" aria-describedby="emailHelp" name="image_url"
-                value="{{partner.image_url}}" required>
+                value="{{image_url}}" required>
             <div id="emailHelp" class="form-text">Veuillez indiquer l'url de l'image</div>
         </div>
-        {{#if partner.is_active}}
+        {{#if is_active}}
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="is_active" id="active" value="true" checked>
             <label class="form-check-label" for="active">Actif</label>
@@ -107,7 +108,8 @@
         {{/if}}
         <div class="d-flex justify-content-between flex-wrap">
             <h6>Modules déjà actifs : </h6>
-            {{#partnerModules}}
+            {{#if Modules}}
+            {{#Modules}}
             <div class="form-check mb-3">
                 <input class="form-check-input" type="checkbox" value="{{id}}" id="module" name="module" checked
                     disabled>
@@ -115,9 +117,10 @@
                     {{name}}
                 </label>
             </div>
-            {{/partnerModules}}
+            {{/Modules}}
+            {{/if}}
         </div>
-
+{{/partner}}
         <div class="d-flex justify-content-between flex-wrap">
             <h6>Choix des nouveaux modules :</h6>
             {{#each modules}}
@@ -132,4 +135,5 @@
 
         <button type="submit" class="btn btn-success">Valider</button>
     </form>
+    
 </div>
