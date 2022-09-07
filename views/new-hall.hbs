@@ -17,6 +17,9 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
+                        <a class="nav-link" href="/admin/allHall">Liste des salles</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="/admin">Retour</a>
                     </li>
                     <li class="nav-item">
@@ -27,9 +30,8 @@
         </div>
     </div>
 </nav>
-<h2 class="text-center mt-4">Création d'un nouveau partenaire</h2>
-<div class="container mt-5">
-    {{#if message}}
+<h2 class="text-center mt-4">Création d'une nouvelle salle</h2>
+{{#if message}}
     <div class="alert alert-success mt-4" role="alert">
         <p class="text-center">{{message}}</p>
     </div>
@@ -39,15 +41,37 @@
         <p class="text-center">{{error}}</p>
     </div>
     {{/if}}
-    <form method="post" action="/admin/newPartner">
+<div class="container mt-5">
+    <form method="post" action="/admin/newHall">
+        <select class="form-select mb-3" aria-label="Default select example" id="partner" name="partner">
+            <option selected>Choisir un partenaire associé : </option>
+            {{#partners}}
+            <option value={{id}}>{{name}}</option>
+            {{/partners}}
+        </select>
         <div class="mb-3">
-            <label for="name" class="form-label">Nom du partenaire</label>
-            <input type="text" class="form-control" id="name" aria-describedby="emailHelp" name="name">
+            <label for="name" class="form-label">Nom de la Salle</label>
+            <input type="text" class="form-control" id="name" aria-describedby="emailHelp" name="name" required>
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
             <textarea name="description" id="description" cols="15" rows="4" class="form-control"></textarea>
         </div>
+        <fieldset>
+            <legend>Adresse</legend>
+            <div class="mb-3">
+                <label for="street" class="form-label">N° et nom de rue : </label>
+                <input type="text" class="form-control" id="street" aria-describedby="emailHelp" name="street" required>
+            </div>
+            <div class="mb-3">
+                <label for="postalCode" class="form-label">Code postal :</label>
+                <input type="text" class="form-control" id="postalCode" aria-describedby="emailHelp" name="postalCode" required>
+            </div>
+            <div class="mb-3">
+                <label for="city" class="form-label">Ville :</label>
+                <input type="text" class="form-control" id="city" aria-describedby="emailHelp" name="city" required>
+            </div>
+        </fieldset>
         <button type="submit" class="btn btn-success">Valider</button>
     </form>
 </div>

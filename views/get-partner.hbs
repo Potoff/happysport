@@ -27,27 +27,33 @@
         </div>
     </div>
 </nav>
-<h2 class="text-center mt-4">Création d'un nouveau partenaire</h2>
-<div class="container mt-5">
-    {{#if message}}
-    <div class="alert alert-success mt-4" role="alert">
-        <p class="text-center">{{message}}</p>
+
+<div class="container text-center mt-5 d-md-flex justify-content-between align-items-center">
+    {{#partner}}
+    <div class="mb-3">
+        <img src={{image_url}} alt=""
+            class="img-fluid w-75 border rounded rounded-4 border-1 border-dark border-opacity-25">
     </div>
-    {{/if}}
-    {{#if error}}
-    <div class="alert alert-danger mt-4" role="alert">
-        <p class="text-center">{{error}}</p>
+    <div>
+        <div>
+            {{#if is_active}}
+            <span class="badge rounded-pill text-bg-success">Actif</span>
+            {{else}}
+            <span class="badge rounded-pill text-bg-secondary">Inactif</span>
+            {{/if}}
+        </div>
+        <h2 class="mb-3"><u>{{name}}</u></h2>
+        <p class="mb-3">{{description}}</p>
+        <p class="mb-3">{{email}}</p>
+        <h6 class="h6 p-2 text-center"><u> Liste des modules actifs : </u></h6>
+        <ul class="list-group list-group-flush text-center mb-3">
+            {{#Modules}}
+            <li class="list-group-item fs-5 fw-bold">{{name}}</li>
+            <p class="fs-6 fst-italic">{{description}}</p>
+            {{/Modules}}
+        </ul>
     </div>
-    {{/if}}
-    <form method="post" action="/admin/newPartner">
-        <div class="mb-3">
-            <label for="name" class="form-label">Nom du partenaire</label>
-            <input type="text" class="form-control" id="name" aria-describedby="emailHelp" name="name">
-        </div>
-        <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea name="description" id="description" cols="15" rows="4" class="form-control"></textarea>
-        </div>
-        <button type="submit" class="btn btn-success">Valider</button>
-    </form>
+
+
+    {{/partner}}
 </div>

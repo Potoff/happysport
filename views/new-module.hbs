@@ -29,7 +29,7 @@
 </nav>
 
 <h2 class="text-center mt-4">Gestion des modules</h2>
-<div class="container mt-5">
+<div class="container mt-5 d-flex flex-column align-items-center">
     {{#if message}}
     <div class="d-flex flex-column align-items-center">
         <div class="alert alert-success mt-4 mb-4" role="alert">
@@ -41,49 +41,107 @@
     </div>
     {{/if}}
     {{#if error}}
-    <div class="alert alert-danger mt-4" role="alert">
-        <p class="text-center">{{error}}</p>
+    <div class="d-flex flex-column align-items-center">
+        <div class="alert alert-danger mt-4" role="alert">
+            <p class="text-center">{{error}}</p>
+        </div>
     </div>
-    {{/if}}
+    <a href="/admin/addModuleForm">
+        <button type="button" class="btn btn-dark">Afficher la liste des modules</button>
+    </a>
+    <a href="/admin/addModuleForm">
+        <button type="button" class="btn btn-dark">Afficher la liste des modules</button>
+    </a>
+</div>
 
-
-    <div class="list-group mb-6">
-        {{#each modules}}
-        <div class="list-group-item list-group-item-action flex-column align-items-start d-flex">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">{{name}}</h5>
+{{/if}}
+<div class="list-group list-group-flush w-50 mb-5">
+    {{#each modules}}
+    <div class="d-flex list-group-item justify-content-between align-items-center">
+        <div>
+            <h5>{{name}}</h5>
+            <p>{{description}}</p>
+        </div>
+        <div class="d-flex">
+            <a type="button" data-bs-toggle="modal" data-bs-target="#updateModal"
+                class="mx-2 badge rounded-pill bg-dark"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                    fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                    <path
+                        d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                </svg></a>
+            <a type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" class="mx-2 badge rounded-pill bg-dark"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                    <path fill-rule="evenodd"
+                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                </svg></a>
+        </div>
+    </div>
+    {{!-- Update Modal --}}
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modifier le module</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <p class="mb-1">{{description}}</p>
-            <div class="align-self-end">
-                <a href="#" class="btn btn-warning"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                        fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                        <path
-                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                    </svg></a>
-                <a href="/admin/deleteModule/{{id}}" class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg"
-                        width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                        <path
-                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                        <path fill-rule="evenodd"
-                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                    </svg></a>
+            <div class="modal-body">
+                <form method="post" action="/admin/updateModule/{{id}}">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nom du module</label>
+                        <input type="text" class="form-control" id="name" aria-describedby="emailHelp" name="name" value="{{name}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea name="description" id="description" cols="5" rows="2" class="form-control">{{description}}</textarea>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="submit" class="btn btn-success">Valider</button>
+                </form>
             </div>
         </div>
-        {{/each}}
-    </div>
-
-    <div class="p-5 container">
-        <form method="post" action="/admin/newModule">
-            <h3 class="text-center mt-5">Ajouter un nouveau module</h3>
-            <div class="mb-3">
-                <label for="name" class="form-label">Nom du module</label>
-                <input type="text" class="form-control" id="name" aria-describedby="emailHelp" name="name">
-            </div>
-            <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <textarea name="description" id="description" cols="15" rows="4" class="form-control"></textarea>
-            </div>
-            <button type="submit" class="btn btn-success">Valider</button>
-        </form>
     </div>
 </div>
+    {{!-- Delete Modal --}}
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Suppression définitive du module</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="/admin/deleteModule/{{id}}">
+                        <p class="fs-5">Etes vous sur de vouloir supprimer ce module ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
+                <button type="submit" class="btn btn-success">Valider</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    {{/each}}
+</div>
+
+<div class="p-5 container">
+    <form method="post" action="/admin/newModule">
+        <h3 class="text-center mt-5">Ajouter un nouveau module</h3>
+        <div class="mb-3">
+            <label for="name" class="form-label">Nom du module</label>
+            <input type="text" class="form-control" id="name" aria-describedby="emailHelp" name="name">
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" id="description" cols="15" rows="4" class="form-control"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Valider</button>
+    </form>
+</div>
+</div>
+
