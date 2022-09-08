@@ -61,12 +61,12 @@ app.use('/franchise', (req, res, next) => {
 }, franchiseRouter);
 
 app.use('/salle',(req, res, next) => {
-    if(req.isAuthenticated() && req.user.RolId === 3){
+    if(req.isAuthenticated() && req.user.RoleId === 3){
         return next()
     }
     req.flash('error', 'Vous devez être connecté être gérant de salle pour acceder à cette page !')
     res.render('index', { message: req.flash('error') })
-} ,salleRouter);
+}, salleRouter);
 
 app.use('/', indexRouter);
 app.use('/logout', (req, res, next) => {

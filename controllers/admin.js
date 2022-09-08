@@ -373,15 +373,46 @@ exports.deleteHall = (req, res, next) => {
         where: { id: req.params.id }
     })
         .then((hall) => {
+            let user = db.user.findOne({
+                where: {id: hall.UserId}
+            })
             hall.destroy()
+            return user
+        })
+        .then((user) => {
+            user.destroy();
         })
         .then(() => {
-            req.flash('message', 'La salle a bien été supprimée ')
+            req.flash('message', 'La salle a bien été supprimée ');
             res.render('all-hall', { message: req.flash('message') });
         })
         .catch((err) => {
             req.flash('error')
             res.render('all-hall', { error: err })
+        })
+};
+
+exports.deletePartner = async (req, res, next) => {
+    await db.Partner.findOne({
+        where: { id: req.params.id }
+    })
+        .then((partner) => {
+            const user = db.User.findOne({
+                where: { id: partner.UserId }
+            })
+            partner.destroy();
+            return user
+        })
+        .then((user) => {
+            user.destroy();
+        })
+        .then(() => {
+            req.flash('message', 'Le partenaire a bien été supprimé ')
+            res.render('admin-index', { message: req.flash('message') });
+        })
+        .catch((err) => {
+            req.flash('error')
+            res.render('admin-index', { error: err })
         })
 };
 
@@ -397,7 +428,6 @@ exports.getHall = (req, res, next) => {
         }]
     })
     .then((hall) => {
-        console.log(hall)
         res.render('get-hall', {hall: hall})
     })
     .catch((err) => {
