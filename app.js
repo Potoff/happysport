@@ -6,8 +6,8 @@ const createError = require('http-errors');
 const passport = require('passport');
 const session = require('express-session');
 const flash = require('connect-flash-plus');
-const passportConfig = require('./config/passport');
-const hbs = require('hbs')
+require('./config/passport');
+require('hbs');
 
 // Router Constantes
 const indexRouter = require('./routes/index');
