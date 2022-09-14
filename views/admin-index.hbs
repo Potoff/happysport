@@ -13,16 +13,16 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
         </div>
-        <div>
+        <div class="w-50">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
+                    <li class="nav-item mx-2">
                         <a class="nav-link" aria-current="page" href="/admin/addPartnerForm">Ajouter un partenaire</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item mx-2">
                         <a class="nav-link" href="/admin/addModuleForm">Modules</a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown mx-2">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Salles</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -30,7 +30,7 @@
                             <li><a class="dropdown-item" href="/admin/newHallForm">Ajouter une salle</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item mx-2">
                         <a class="nav-link" href="/logout">Déconnexion</a>
                     </li>
                 </ul>
@@ -72,7 +72,8 @@
             <div class="card-body">
                 <h5 class="card-title">{{name}}</h5>
                 <p class="card-text">{{description}}</p>
-                <p class="card-text mb-3">{{email}}</p>             
+                <p class="card-text mb-3">Login: {{User.email}}</p>
+                <p class="card-text mb-3">Contact: {{email}}</p>             
                 <div class="d-flex justify-content-between">
                     <div class="d-flex justify-content-between w-50">
                         <a href="/admin/getUpdatePartnerForm/{{id}}" class="badge rounded-pill bg-dark"><svg

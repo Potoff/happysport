@@ -42,7 +42,8 @@
         <h2 class="mb-3"><u>{{name}}</u></h2>
         <h3>{{Partner.name}}</h3>
         <p class="mb-3">{{description}}</p>
-        <p class="mb-3">{{email}}</p>
+        <p class="mb-3">Login: {{User.email}}</p>
+        <p class="mb-3">Contact: {{email}}</p>
         <p class="mb-3">{{street}}</p>
         <p class="mb-3">{{postal_code}}</p>
         <p class="mb-3">{{city}}</p>
@@ -53,6 +54,7 @@
             <p class="fs-6 fst-italic">{{description}}</p>
             {{/Modules}}
         </ul>
+         <a href="/salle/passwordForm">Changer mon mot de passe</a>
     </div>
     {{/hall}}
 </div>

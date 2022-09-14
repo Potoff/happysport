@@ -2,11 +2,12 @@ const db = require('../models');
 const Sequelize = require('sequelize');
 const generator = require('generate-password');
 const bcrypt = require('bcrypt');
+const mailjet = require('../config/mailjet');
 
 
 
 exports.getAllPartners = (req, res, next) => {
-    db.partner.findAll({ include: db.module })
+    db.partner.findAll({ include: [{ model: db.module }, { model: db.user }] })
         .then((partners) => {
             db.module.findAll({ include: db.partner })
                 .then((modules) => {
@@ -49,12 +50,13 @@ exports.addModuleForm = (req, res, next) => {
 };
 
 exports.newPartner = (req, res, next) => {
+    let passwordForm = "localhost:3000/franchise/passwordForm"
     let email = req.body.name.split(' ').join('').toLowerCase() + '@happysport.com'
-    let password = generator.generate({
+    let Password = generator.generate({
         length: 10,
         numbers: true
     })
-    bcrypt.hash(password, 10)
+    bcrypt.hash(Password, 10)
         .then((password) => {
             const user = new db.User({
                 email: email,
@@ -65,18 +67,50 @@ exports.newPartner = (req, res, next) => {
                 .then((user) => {
                     const partner = new db.Partner({
                         name: req.body.name,
-                        email: user.email,
+                        email: req.body.email,
                         description: req.body.description,
                         UserId: user.id
                     });
                     partner.save()
+                    return partner
+                })
+                .then((partner) => {
+                    const request = mailjet
+                        .post("send", { 'version': 'v3.1' })
+                        .request({
+                            "Messages": [
+                                {
+                                    "From": {
+                                        "Email": "paul@paul-dem.com",
+                                        "Name": "Admin HappySport"
+                                    },
+                                    "To": [
+                                        {
+                                            "Email": req.body.email,
+                                            "Name": req.body.name
+                                        }
+                                    ],
+                                    "Subject": "Nouveau partenaire créé",
+                                    "TextPart": "Félicitation, votre compte partenaire vient d'être créé !",
+                                    "HTMLPart": `<h1>Bienvenue chez HappySport " ${req.body.name} "</h1><br /><h3>Vous pouvez dès à présent vous connecter, voici vos identifiants : </h3><br />Login : ${email}  <br />   Mot de passe :   ${Password}  <br /><p><strong><a href="">N'oubliez pas de changer votre mot de passe lors de la première connexion en copiant ce lien dans votre navigateur : ${passwordForm}</a></strong></p><br /><h6>Vous pouvez répondre à ce mail si vous avez besoin de contacter l'administrateur</h6>`,
+                                    "CustomID": "AppGettingStartedTest"
+                                }
+                            ]
+                        })
+                    request
+                        .then((result) => {
+                            console.log(result.body)
+                        })
+                        .catch((err) => {
+                            console.log(err.statusCode)
+                        })
                 })
                 .catch((err) => {
                     console.log(err)
                 })
         })
         .then(() => {
-            req.flash('message', 'Le nouveau partenaire a bien été enregistré avec le mot de passe suivant : ' + password + ' et l\'adresse mail suivante : ' + email)
+            req.flash('message', 'Le nouveau partenaire a bien été enregistré. Un mail de confirmation vient d\'être envoyé à l\'adresse mail  ' + req.body.email)
             res.render('new-partner', { message: req.flash('message') });
         })
         .catch((err) => {
@@ -139,7 +173,7 @@ exports.updateModule = (req, res, next) => {
         .then((module) => {
             module.save()
             req.flash('message', 'Le module a bien été modifié')
-            res.render('new-module', {message: req.flash('message')})
+            res.render('new-module', { message: req.flash('message') })
         })
         .catch((err) => {
             req.flash('error')
@@ -201,7 +235,7 @@ exports.updateOnePartner = (req, res, next) => {
             as: 'Halls',
             include: [db.module]
         }
-    ]
+        ]
     })
         .then((partner) => {
             if (req.body.is_active === 'false') {
@@ -231,7 +265,7 @@ exports.updateOnePartner = (req, res, next) => {
             }
             else {
                 partner.Halls.forEach((hall) => {
-                    
+
                     hall.removeModules(partner.Modules)
                 })
                 partner.removeModules(partner.Modules);
@@ -240,12 +274,38 @@ exports.updateOnePartner = (req, res, next) => {
 
         })
         .then((partner) => {
+            mailjet
+                .post("send", { 'version': 'v3.1' })
+                .request({
+                    "Messages": [
+                        {
+                            "From": {
+                                "Email": "paul@paul-dem.com",
+                                "Name": "Admin HappySport"
+                            },
+                            "To": [
+                                {
+                                    "Email": partner.email,
+                                    "Name": partner.name
+                                }
+                            ],
+                            "Subject": "Modification d'un ou plusieurs modules lié à votre compote",
+                            "TextPart": "Des modules viennent d'être modifiés !",
+                            "HTMLPart": "<h1>Bonjour " + partner.name + "</h1><br /><h3>Des modules liés à votre profil viennent d'être modifiés. </h3><br /> Vous retrouverez le détail des informations en vous connectant sur votre interface HappySport. <br /><h6><strong>N'hésitez pas à répondre à ce mail pour contacter l'administrateur !</strong></h6>",
+                            "CustomID": "AppGettingStartedTest"
+                        }
+                    ]
+                })
+                .then((result) => console.log(result.body))
+                .catch((err) => {
+                    req.flash('error')
+                    res.render('admin-index', { error: err })
+                })
+            return partner
+        })
+        .then((partner) => {
             partner.save();
             res.redirect('/admin');
-        })
-        .catch((err) => {
-            req.flash('error')
-            res.render('admin-index', { error: err })
         })
 };
 
@@ -255,6 +315,9 @@ exports.getOnePartner = (req, res, next) => {
         include: [{
             model: db.module,
             through: { attributes: [] }
+        },
+        {
+            model: db.user
         }]
     })
         .then((partner) => {
@@ -267,16 +330,17 @@ exports.getOnePartner = (req, res, next) => {
 };
 
 exports.newHall = (req, res, next) => {
+    let passwordForm = "localhost:3000/salle/passwordForm"
     if (req.body.partner === 'Choisir un partenaire associé :') {
         req.flash('error', 'Veuillez choisir un partenaire lié à la salle de sport')
         res.render('new-hall', { error: req.flash('error') })
     } else {
         let email = req.body.name.split(' ').join('').toLowerCase() + '@happysport.com'
-        let password = generator.generate({
+        let Password = generator.generate({
             length: 10,
             numbers: true
         })
-        bcrypt.hash(password, 10)
+        bcrypt.hash(Password, 10)
             .then((password) => {
                 const user = new db.user({
                     email: email,
@@ -287,21 +351,91 @@ exports.newHall = (req, res, next) => {
                     .then((user) => {
                         const hall = new db.hall({
                             name: req.body.name,
-                            email: email,
+                            email: req.body.email,
                             description: req.body.description,
                             city: req.body.city,
                             street: req.body.street,
                             postal_code: req.body.postalCode,
                             UserId: user.id,
                             PartnerId: req.body.partner
-                        })
+                        },
+                            {
+                                include: [
+                                    {
+                                        model: db.partner,
+                                        as: "Partner"
+                                    }
+                                ]
+                            }
+                        )
                         hall.save()
-                    });
+                        return hall
+                    }).then((hall) => {
+                        db.partner.findOne({
+                            where: { id: hall.PartnerId }
+                        })
+                            .then((partner) => {
+                                mailjet
+                                    .post("send", { 'version': 'v3.1' })
+                                    .request({
+                                        "Messages": [
+                                            {
+                                                "From": {
+                                                    "Email": "paul@paul-dem.com",
+                                                    "Name": "Admin HappySport"
+                                                },
+                                                "To": [
+                                                    {
+                                                        "Email": partner.email,
+                                                        "Name": partner.name
+                                                    }
+                                                ],
+                                                "Subject": "Nouvelle salle créée",
+                                                "TextPart": "Une nouvelle salle vient d'être créeé !",
+                                                "HTMLPart": "<h1>Bonjour " + partner.name + "</h1><br /><h3>Une nouvelle salle vient d'être créée, voici ses informations : </h3><br />Nom : " + hall.name + " <br /> " + "Mail contact :  " + hall.email + "<br /> Vous retrouverez le détail des informations en vous connectant sur votre interface HappySport. <br /><h6><strong>N'hésitez pas à répondre à ce mail si vous avez besoin de contacter l'administrateur.</strong></h6>",
+                                                "CustomID": "AppGettingStartedTest"
+                                            }
+                                        ]
+                                    })
+                                    .catch((err) => {
+                                        req.flash('error')
+                                        res.render('admin-index', { error: err })
+                                    })
+
+                            })
+                        const request = mailjet
+                            .post("send", { 'version': 'v3.1' })
+                            .request({
+                                "Messages": [
+                                    {
+                                        "From": {
+                                            "Email": "paul@paul-dem.com",
+                                            "Name": "Admin HappySport"
+                                        },
+                                        "To": [
+                                            {
+                                                "Email": req.body.email,
+                                                "Name": req.body.name
+                                            }
+                                        ],
+                                        "Subject": "Nouvelle salle créée",
+                                        "TextPart": "Félicitation, votre compte structure vient d'être créé !",
+                                        "HTMLPart": `<h1>Bienvenue chez HappySport " ${req.body.name} "</h1><br /><h3>Vous pouvez dès à présent vous connecter, voici vos identifiants : </h3><br />Login : ${email}  <br />   Mot de passe :   ${Password}  <br /><p><strong><a href="">N'oubliez pas de changer votre mot de passe lors de la première connexion en copiant ce lien dans votre navigateur : ${passwordForm}</a></strong></p><br /><h6>Vous pouvez répondre à ce mail si vous avez besoin de contacter l'administrateur</h6>`,
+                                        "CustomID": "AppGettingStartedTest"
+                                    }
+                                ]
+                            })
+                            .catch((err) => {
+                                req.flash('error')
+                                res.render('admin-index', { error: err })
+                            })
+                    })
             })
+
             .then(() => {
                 db.partner.findAll()
                     .then((partners) => {
-                        req.flash('message', 'La nouvelle salle a bien été enregistré avec l\'adresse mail ' + email + ' mot de passe suivant : ' + password)
+                        req.flash('message', 'La nouvelle salle a bien été créée. Un mail de confirmation a été envoyé aux mails de contact. ')
                         res.render('new-hall', { partners: partners, message: req.flash('message') });
                     })
                     .catch((err) => {
@@ -323,49 +457,111 @@ exports.getAllHall = (req, res, next) => {
             model: db.partner,
             as: 'Partner',
             include: [db.module]
-        },{
+        }, {
             model: db.module
+        },
+        {
+            model: db.user
         }]
     })
         .then((halls) => {
             res.render('all-hall', { hall: halls })
-            })       
+        })
 };
 
 exports.updateHall = (req, res, next) => {
     db.hall.findOne({
-        where: {id: req.params.id},
-        include: [db.module]
+        where: { id: req.params.id },
+        include: [{ model: db.module }, { model: db.partner, as: "Partner" }]
     })
-    .then((hall) => {
-        hall.set({
-            name: req.body.name,
-            description: req.body.description,
-            street: req.body.street,
-            postal_code: req.body.postal_code,
-            city: req.body.city,
-            image_url: req.body.image_url,
-            is_active: req.body.is_active
-        })
+        .then((hall) => {
+            hall.set({
+                name: req.body.name,
+                email: req.body.email,
+                description: req.body.description,
+                street: req.body.street,
+                postal_code: req.body.postal_code,
+                city: req.body.city,
+                image_url: req.body.image_url,
+                is_active: req.body.is_active
+            })
 
-        if (req.body.module) {
-            hall.setModules(req.body.module);
+            if (req.body.module) {
+                hall.setModules(req.body.module);
+                return hall
+            }
+            else {
+                hall.removeModules(hall.Modules)
+                return hall
+            }
+        })
+        .then((hall) => {
+            mailjet
+                .post("send", { 'version': 'v3.1' })
+                .request({
+                    "Messages": [
+                        {
+                            "From": {
+                                "Email": "paul@paul-dem.com",
+                                "Name": "Admin HappySport"
+                            },
+                            "To": [
+                                {
+                                    "Email": hall.email,
+                                    "Name": hall.name
+                                }
+                            ],
+                            "Subject": "Modifications liées à votre compte",
+                            "TextPart": "Des modifications ont été effectuées sur votre compte HappySport",
+                            "HTMLPart": "<h1>Bonjour " + hall.name + "</h1><br /><h3>Des informations liées à votre comptes viennent d'être modifiées par un administrateur. Nous vous invitons à les consulter sur votre compte HappySport. </h3><br />Vous retrouverez le détail des informations en vous connectant sur votre interface. <br /><h6><strong>Vous pouvez répondre à ce mail pour contacter votre administrateur !</strong></h6>",
+                            "CustomID": "AppGettingStartedTest"
+                        }
+                    ]
+                })
+                .catch((err) => {
+                    req.flash('error')
+                    res.render('all-hall', { error: err })
+                })
             return hall
-        }
-        else {
-            hall.removeModules(hall.Modules)
+        })
+        .then((hall) => {
+            mailjet
+                .post("send", { 'version': 'v3.1' })
+                .request({
+                    "Messages": [
+                        {
+                            "From": {
+                                "Email": "paul@paul-dem.com",
+                                "Name": "Admin HappySport"
+                            },
+                            "To": [
+                                {
+                                    "Email": hall.Partner.email,
+                                    "Name": hall.Partner.name
+                                }
+                            ],
+                            "Subject": "Modifications liées à l'une de votre structure",
+                            "TextPart": "Des modifications ont été effectuées sur l'une de votre structure",
+                            "HTMLPart": "<h1>Bonjour " + hall.Partner.name + "</h1><br /><h3>Des informations liées à l'une de votre salle viennent d'être modifiées par un administrateur. Nous vous invitons à les consulter sur votre compte HappySport. </h3><br />Vous retrouverez le détail des informations en vous connectant sur votre interface HappySport. <br /><h6><strong>Vous pouvez répondre à ce mail pour contacter votre administrateur.</strong></h6>",
+                            "CustomID": "AppGettingStartedTest"
+                        }
+                    ]
+                })
+                .catch((err) => {
+                    req.flash('error')
+                    res.render('all-hall', { error: err })
+                })
             return hall
-        }
-    })
-    .then((hall) => {
-        hall.save()
-        req.flash('message', 'La salle a bien été modifiée')
-        res.render('all-hall', {message: req.flash('message')})   
-    })
-    .catch((err) => {
-        req.flash('error')
-        res.render('all-hall', {error: err})
-    })
+        })
+        .then((hall) => {
+            hall.save()
+            req.flash('message', 'La salle a bien été modifiée')
+            res.render('all-hall', { message: req.flash('message') })
+        })
+        .catch((err) => {
+            req.flash('error')
+            res.render('all-hall', { error: err })
+        })
 };
 
 exports.deleteHall = (req, res, next) => {
@@ -374,7 +570,7 @@ exports.deleteHall = (req, res, next) => {
     })
         .then((hall) => {
             let user = db.user.findOne({
-                where: {id: hall.UserId}
+                where: { id: hall.UserId }
             })
             hall.destroy()
             return user
@@ -418,20 +614,23 @@ exports.deletePartner = async (req, res, next) => {
 
 exports.getHall = (req, res, next) => {
     db.hall.findOne({
-        where: {id: req.params.id},
+        where: { id: req.params.id },
         include: [{
             model: db.partner,
             as: 'Partner',
             include: [db.module]
-        },{
+        }, {
             model: db.module
+        },
+        {
+            model: db.user
         }]
     })
-    .then((hall) => {
-        res.render('get-hall', {hall: hall})
-    })
-    .catch((err) => {
-        req.flash('error')
-        res.render('get-hall', { error: err })
-    })
-}
+        .then((hall) => {
+            res.render('get-hall', { hall: hall })
+        })
+        .catch((err) => {
+            req.flash('error')
+            res.render('get-hall', { error: err })
+        })
+};
