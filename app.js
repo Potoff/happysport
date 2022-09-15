@@ -6,6 +6,7 @@ const createError = require('http-errors');
 const passport = require('passport');
 const session = require('express-session');
 const flash = require('connect-flash-plus');
+const cors = require('cors')
 require('./config/passport');
 require('hbs');
 
@@ -20,6 +21,7 @@ const salleRouter = require('./routes/salle');
 // App Middleware
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/css', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css')));
 app.use('/js', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js')));

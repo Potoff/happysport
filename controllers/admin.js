@@ -50,7 +50,6 @@ exports.addModuleForm = (req, res, next) => {
 };
 
 exports.newPartner = (req, res, next) => {
-    let passwordForm = "localhost:3000/franchise/passwordForm"
     let email = req.body.name.split(' ').join('').toLowerCase() + '@happysport.com'
     let Password = generator.generate({
         length: 10,
@@ -86,13 +85,13 @@ exports.newPartner = (req, res, next) => {
                                     },
                                     "To": [
                                         {
-                                            "Email": req.body.email,
-                                            "Name": req.body.name
+                                            "Email": partner.email,
+                                            "Name": partner.name
                                         }
                                     ],
                                     "Subject": "Nouveau partenaire créé",
                                     "TextPart": "Félicitation, votre compte partenaire vient d'être créé !",
-                                    "HTMLPart": `<h1>Bienvenue chez HappySport " ${req.body.name} "</h1><br /><h3>Vous pouvez dès à présent vous connecter, voici vos identifiants : </h3><br />Login : ${email}  <br />   Mot de passe :   ${Password}  <br /><p><strong><a href="">N'oubliez pas de changer votre mot de passe lors de la première connexion en copiant ce lien dans votre navigateur : ${passwordForm}</a></strong></p><br /><h6>Vous pouvez répondre à ce mail si vous avez besoin de contacter l'administrateur</h6>`,
+                                    "HTMLPart": `<h1>Bienvenue chez HappySport " ${partner.name} "</h1><br /><h3>Vous pouvez dès à présent vous connecter, voici vos identifiants : </h3><br />Login : ${partner.email}  <br />   Mot de passe :   ${Password}  <br /><p><strong><a href="">N'oubliez pas de changer votre mot de passe lors de la première connexion directement sur votre profil.</a></strong></p><br /><h6>Vous pouvez répondre à ce mail si vous avez besoin de contacter l'administrateur, n'hésitez pas à conserver ce mail sans durée de limite.</h6>`,
                                     "CustomID": "AppGettingStartedTest"
                                 }
                             ]
@@ -289,7 +288,7 @@ exports.updateOnePartner = (req, res, next) => {
                                     "Name": partner.name
                                 }
                             ],
-                            "Subject": "Modification d'un ou plusieurs modules lié à votre compote",
+                            "Subject": "Modification d'un ou plusieurs modules lié à votre compte",
                             "TextPart": "Des modules viennent d'être modifiés !",
                             "HTMLPart": "<h1>Bonjour " + partner.name + "</h1><br /><h3>Des modules liés à votre profil viennent d'être modifiés. </h3><br /> Vous retrouverez le détail des informations en vous connectant sur votre interface HappySport. <br /><h6><strong>N'hésitez pas à répondre à ce mail pour contacter l'administrateur !</strong></h6>",
                             "CustomID": "AppGettingStartedTest"
@@ -327,10 +326,9 @@ exports.getOnePartner = (req, res, next) => {
             req.flash('error')
             res.render('/admin', { error: err })
         })
-};
+}; 
 
 exports.newHall = (req, res, next) => {
-    let passwordForm = "localhost:3000/salle/passwordForm"
     if (req.body.partner === 'Choisir un partenaire associé :') {
         req.flash('error', 'Veuillez choisir un partenaire lié à la salle de sport')
         res.render('new-hall', { error: req.flash('error') })
@@ -420,7 +418,7 @@ exports.newHall = (req, res, next) => {
                                         ],
                                         "Subject": "Nouvelle salle créée",
                                         "TextPart": "Félicitation, votre compte structure vient d'être créé !",
-                                        "HTMLPart": `<h1>Bienvenue chez HappySport " ${req.body.name} "</h1><br /><h3>Vous pouvez dès à présent vous connecter, voici vos identifiants : </h3><br />Login : ${email}  <br />   Mot de passe :   ${Password}  <br /><p><strong><a href="">N'oubliez pas de changer votre mot de passe lors de la première connexion en copiant ce lien dans votre navigateur : ${passwordForm}</a></strong></p><br /><h6>Vous pouvez répondre à ce mail si vous avez besoin de contacter l'administrateur</h6>`,
+                                        "HTMLPart": `<h1>Bienvenue chez HappySport " ${req.body.name} "</h1><br /><h3>Vous pouvez dès à présent vous connecter, voici vos identifiants : </h3><br />Login : ${email}  <br />   Mot de passe :   ${Password}  <br /><p><strong><a href="">N'oubliez pas de changer votre mot de passe lors de votre première connexion en vous rendant sur votre profil.</a></strong></p><br /><h6>Vous pouvez répondre à ce mail si vous avez besoin de contacter l'administrateur, n'hésitez pas à conserver ce mail.</h6>`,
                                         "CustomID": "AppGettingStartedTest"
                                     }
                                 ]
@@ -513,7 +511,7 @@ exports.updateHall = (req, res, next) => {
                             ],
                             "Subject": "Modifications liées à votre compte",
                             "TextPart": "Des modifications ont été effectuées sur votre compte HappySport",
-                            "HTMLPart": "<h1>Bonjour " + hall.name + "</h1><br /><h3>Des informations liées à votre comptes viennent d'être modifiées par un administrateur. Nous vous invitons à les consulter sur votre compte HappySport. </h3><br />Vous retrouverez le détail des informations en vous connectant sur votre interface. <br /><h6><strong>Vous pouvez répondre à ce mail pour contacter votre administrateur !</strong></h6>",
+                            "HTMLPart": "<h1>Bonjour " + hall.name + "</h1><br /><h3>Des informations liées à votre compte viennent d'être modifiées par un administrateur. Nous vous invitons à les consulter sur votre compte HappySport. </h3><br />Vous retrouverez le détail des informations en vous connectant sur votre interface. <br /><h6><strong>Vous pouvez répondre à ce mail pour contacter votre administrateur !</strong></h6>",
                             "CustomID": "AppGettingStartedTest"
                         }
                     ]
