@@ -52,11 +52,11 @@
     </div>
     {{/if}}
     {{!-- Search bar --}}
-    <input class="form-control mt-5" list="datalistOptions" id="exampleDataList" placeholder="Chercher une salle ... ">
+    <input class="form-control mt-5" list="datalistOptions" id="exampleDataListPartnerIndex" placeholder="Chercher une salle ... ">
 
     <div class="container-fluid mt-4 d-flex justify-content-center align-items-center flex-wrap">
         {{#partner.Halls}}
-        <div class="card mt-2 mx-2 h-100" style="width: 18rem;">
+        <div class="card mt-2 mx-2 h-100 hallCardPartner" style="width: 18rem;">
             <img class="card-img-top" src={{image_url}} alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">{{name}}</h5>

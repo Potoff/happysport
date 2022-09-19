@@ -34,31 +34,34 @@
 <div class="container">
     <h2 class="text-center mt-2 mb-4">Toutes les salles : </h2>
     {{#if message}}
-        <div class="d-flex flex-column align-items-center">
-            <div class="alert alert-success mt-4 mb-5" role="alert">
-                <p class="text-center">{{message}}</p>
-            </div>
-            <a href="/admin/allHall">
-                <button type="button" class="btn btn-dark">Retour à la liste des salles</button>
-            </a>
+    <div class="d-flex flex-column align-items-center">
+        <div class="alert alert-success mt-4 mb-5" role="alert">
+            <p class="text-center">{{message}}</p>
         </div>
-        {{/if}}
-        {{#if error}}
-        <div class="d-flex flex-column align-items-center">
-            <div class="alert alert-danger mt-4 mb-5" role="alert">
-                <p class="text-center">{{error}}</p>
-            </div>
-            <a href="/admin/allHall">
-                <button type="button" class="btn btn-dark">Retour à la liste des partenaires</button>
-            </a>
+        <a href="/admin/allHall">
+            <button type="button" class="btn btn-dark">Retour à la liste des salles</button>
+        </a>
+    </div>
+    {{/if}}
+    {{#if error}}
+    <div class="d-flex flex-column align-items-center">
+        <div class="alert alert-danger mt-4 mb-5" role="alert">
+            <p class="text-center">{{error}}</p>
         </div>
-        {{/if}}
+        <a href="/admin/allHall">
+            <button type="button" class="btn btn-dark">Retour à la liste des partenaires</button>
+        </a>
+    </div>
+    {{/if}}
     {{!-- Search bar --}}
-    <input class="form-control mt-5" list="datalistOptions" id="exampleDataList" placeholder="Chercher une salle ... ">
+    <div class="d-flex align-items-center mt-5" id="spinnerContainerHall">
+        <input class="form-control" list="datalistOptions" id="exampleDataListHall"
+            placeholder="Chercher une salle ... ">
+    </div>
     <div class="container-fluid mt-4 d-flex justify-content-center align-items-center flex-wrap">
-        
+
         {{#each hall}}
-        <div class="card mt-2 mx-2 text-center" style="width: 18rem;">
+        <div class="card mt-2 mx-2 text-center hallCard" style="width: 18rem;">
             <div class="card-header">
                 <h4>{{name}}</h4>
                 <img class="card-img-top rounded" src={{image_url}} alt="Card image cap">
@@ -125,8 +128,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Adresse mail de contact</label>
-                                <input type="text" class="form-control" id="email" name="email" aria-describedby="emailHelp"
-                                    name="name" value="{{email}}">
+                                <input type="text" class="form-control" id="email" name="email"
+                                    aria-describedby="emailHelp" name="name" value="{{email}}">
                             </div>
                             <div class="mb-3">
                                 <label for="description" class="form-label">Description</label>
