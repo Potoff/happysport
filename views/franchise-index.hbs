@@ -52,7 +52,25 @@
     </div>
     {{/if}}
     {{!-- Search bar --}}
-    <input class="form-control mt-5" list="datalistOptions" id="exampleDataListPartnerIndex" placeholder="Chercher une salle ... ">
+    <div class="d-flex align-items-center mt-5" id="spinnerContainerPartner">
+        <input class="form-control me-4" list="datalistOptions" id="exampleDataListPartnerIndex"
+            placeholder="Chercher une salle ... ">
+        <div class="form-check form-check-inline">
+            <a href="#">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"
+                    checked>
+                <label class="form-check-label" for="inlineRadio1">Toute</label>
+            </a>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+            <label class="form-check-label" for="inlineRadio1">Active</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+            <label class="form-check-label" for="inlineRadio2">Inactive</label>
+        </div>
+    </div>
 
     <div class="container-fluid mt-4 d-flex justify-content-center align-items-center flex-wrap">
         {{#partner.Halls}}
@@ -61,7 +79,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{name}}</h5>
                 <p class="card-text">{{description}}</p>
-                <p class="card-text mb-3">{{User.email}}</p>             
+                <p class="card-text mb-3">{{User.email}}</p>
                 <div class="d-flex justify-content-between">
                     <div class="d-flex justify-content-between w-50">
                         <a href="/franchise/getHall/{{id}}" class="badge rounded-pill bg-dark"><svg

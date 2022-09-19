@@ -55,8 +55,33 @@
     {{/if}}
     {{!-- Search bar --}}
     <div class="d-flex align-items-center mt-5" id="spinnerContainerHall">
-        <input class="form-control" list="datalistOptions" id="exampleDataListHall"
+        <input class="form-control me-4" list="datalistOptions" id="exampleDataListHall"
             placeholder="Chercher une salle ... ">
+        <div class="form-check form-check-inline">
+            <a href="#">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"
+                    checked>
+                <label class="form-check-label" for="inlineRadio1">Toute</label>
+            </a>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+            <label class="form-check-label" for="inlineRadio1">Active</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+            <label class="form-check-label" for="inlineRadio2">Inactive</label>
+        </div>
+    </div>
+    <div class="mt-4">
+        <select class="form-select" aria-label="Default select example">
+            <option selected>Trier par franchise :</option>
+            {{#each hall}}
+            {{#Partner}}
+            <option value="{{id}}">{{name}}</option>
+            {{/Partner}}
+            {{/each}}
+        </select>
     </div>
     <div class="container-fluid mt-4 d-flex justify-content-center align-items-center flex-wrap">
 
