@@ -591,6 +591,7 @@ exports.deletePartner = async (req, res, next) => {
         where: { id: req.params.id }
     })
         .then((partner) => {
+            console.log(partner)
             const user = db.User.findOne({
                 where: { id: partner.UserId }
             })

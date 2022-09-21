@@ -52,16 +52,32 @@
     </div>
     {{/if}}
     {{!-- Search bar --}}
-    <input class="form-control mt-5" list="datalistOptions" id="exampleDataListPartnerIndex" placeholder="Chercher une salle ... ">
+    <div class="d-flex align-items-center mt-5" id="spinnerContainerPartner">
+        <input class="form-control me-4" list="datalistOptions" id="exampleDataListPartnerIndex"
+            placeholder="Chercher une salle ... ">
+        <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" onclick="window.location='/franchise';"
+                    checked>
+                <label class="form-check-label" for="inlineRadio1">Toute</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="activeHallByPartnerRadio" value="actif">
+            <label class="form-check-label" for="activeHallByPartnerRadio">Active</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inactiveHallByPartnerRadio" value="inactif">
+            <label class="form-check-label" for="inactiveHallByPartnerRadio">Inactive</label>
+        </div>
+    </div>
 
     <div class="container-fluid mt-4 d-flex justify-content-center align-items-center flex-wrap">
         {{#partner.Halls}}
-        <div class="card mt-2 mx-2 h-100 hallCardPartner" style="width: 18rem;">
+        <div class="card mt-2 mx-2 h-100 hallCard" style="width: 18rem;">
             <img class="card-img-top" src={{image_url}} alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">{{name}}</h5>
                 <p class="card-text">{{description}}</p>
-                <p class="card-text mb-3">{{User.email}}</p>             
+                <p class="card-text mb-3">{{User.email}}</p>
                 <div class="d-flex justify-content-between">
                     <div class="d-flex justify-content-between w-50">
                         <a href="/franchise/getHall/{{id}}" class="badge rounded-pill bg-dark"><svg
@@ -73,7 +89,7 @@
                                     d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                             </svg></a>
                     </div>
-                    <div>
+                    <div class="isActive">
                         {{#if is_active}}
                         <span class="badge rounded-pill text-bg-success">Actif</span>
                         {{else}}
