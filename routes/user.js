@@ -6,7 +6,6 @@ const passport = require('passport');
 
 const userCtrl = require('../controllers/user');
 
-router.post('/signup', userCtrl.signup);
 router.post('/login', passport.authenticate('local', {
         failureRedirect: '/',
         failureFlash: true
