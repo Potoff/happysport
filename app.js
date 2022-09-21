@@ -6,7 +6,8 @@ const createError = require('http-errors');
 const passport = require('passport');
 const session = require('express-session');
 const flash = require('connect-flash-plus');
-const cors = require('cors')
+const cors = require('cors');
+const helmet = require('helmet');
 require('./config/passport');
 require('hbs');
 
