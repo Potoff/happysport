@@ -54,27 +54,34 @@
     </div>
     {{/if}}
     {{!-- Search bar --}}
-    <div class="d-flex align-items-center mt-5" id="spinnerContainerHall">
-        <input class="form-control me-4" list="datalistOptions" id="exampleDataListHall"
-            placeholder="Chercher une salle ... ">
-        <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" onclick="window.location='/admin/allHall';"
-                    checked>
+    <div class="d-flex flex-column align-items-center mt-5" id="spinnerContainerHall">
+        <div class="w-75">
+            <input class="form-control me-4" list="datalistOptions" id="exampleDataListHall"
+                placeholder="Chercher une salle ... ">
+        </div>
+        <div class="mt-4 w-75">
+            <input class="form-control me-4" list="datalistOptions" id="selectPartner"
+                placeholder="Chercher par partenaire ... ">
+        </div>
+        <div class="mt-4">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"
+                    onclick="window.location='/admin/allHall';" checked>
                 <label class="form-check-label" for="inlineRadio1">Toutes</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="activeHallRadio" value="actif">
-            <label class="form-check-label" for="activeHallRadio">Active</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inactiveHallRadio" value="inactif">
-            <label class="form-check-label" for="inactiveHallRadio">Inactive</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="activeHallRadio"
+                    value="actif">
+                <label class="form-check-label" for="activeHallRadio">Active</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inactiveHallRadio"
+                    value="inactif">
+                <label class="form-check-label" for="inactiveHallRadio">Inactive</label>
+            </div>
         </div>
     </div>
-    <div class="mt-4">
-        <input class="form-control me-4" list="datalistOptions" id="selectPartner"
-            placeholder="Chercher par partenaire ... ">
-    </div>
+
     <div class="container-fluid mt-4 d-flex justify-content-center align-items-center flex-wrap">
 
         {{#each hall}}
@@ -129,7 +136,8 @@
             </div>
         </div>
         {{!-- Update Modal --}}
-        <div class="modal fade" id="updateModal{{id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="updateModal{{id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -231,7 +239,8 @@
             </div>
         </div>
         {{!-- Delete Modal --}}
-        <div class="modal fade" id="deleteModal{{id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="deleteModal{{id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">

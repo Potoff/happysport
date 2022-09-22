@@ -91,7 +91,7 @@ exports.newPartner = (req, res, next) => {
                                     ],
                                     "Subject": "Nouveau partenaire créé",
                                     "TextPart": "Félicitation, votre compte partenaire vient d'être créé !",
-                                    "HTMLPart": `<h1>Bienvenue chez HappySport " ${partner.name} "</h1><br /><h3>Vous pouvez dès à présent vous connecter, voici vos identifiants : </h3><br />Login : ${partner.email}  <br />   Mot de passe :   ${Password}  <br /><p><strong><a href="">N'oubliez pas de changer votre mot de passe lors de la première connexion directement sur votre profil.</a></strong></p><br /><h6>Vous pouvez répondre à ce mail si vous avez besoin de contacter l'administrateur, n'hésitez pas à conserver ce mail sans durée de limite.</h6>`,
+                                    "HTMLPart": `<h1>Bienvenue chez HappySport " ${partner.name} "</h1><br /><h3>Vous pouvez dès à présent vous connecter, voici vos identifiants : </h3><br />Login : ${email}  <br />   Mot de passe :   ${Password}  <br /><p><strong><a href="">N'oubliez pas de changer votre mot de passe lors de la première connexion directement sur votre profil.</a></strong></p><br /><h6>Vous pouvez répondre à ce mail si vous avez besoin de contacter l'administrateur, n'hésitez pas à conserver ce mail sans durée de limite.</h6>`,
                                     "CustomID": "AppGettingStartedTest"
                                 }
                             ]

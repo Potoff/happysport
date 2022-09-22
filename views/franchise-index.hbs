@@ -52,21 +52,25 @@
     </div>
     {{/if}}
     {{!-- Search bar --}}
-    <div class="d-flex align-items-center mt-5" id="spinnerContainerPartner">
+    <div class="d-flex flex-column align-items-center mt-5" id="spinnerContainerPartner">
         <input class="form-control me-4" list="datalistOptions" id="exampleDataListPartnerIndex"
             placeholder="Chercher une salle ... ">
-        <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" onclick="window.location='/franchise';"
-                    checked>
+        <div class="mt-4">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"
+                    onclick="window.location='/franchise';" checked>
                 <label class="form-check-label" for="inlineRadio1">Toute</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="activeHallByPartnerRadio" value="actif">
-            <label class="form-check-label" for="activeHallByPartnerRadio">Active</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inactiveHallByPartnerRadio" value="inactif">
-            <label class="form-check-label" for="inactiveHallByPartnerRadio">Inactive</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="activeHallByPartnerRadio"
+                    value="actif">
+                <label class="form-check-label" for="activeHallByPartnerRadio">Active</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inactiveHallByPartnerRadio"
+                    value="inactif">
+                <label class="form-check-label" for="inactiveHallByPartnerRadio">Inactive</label>
+            </div>
         </div>
     </div>
 

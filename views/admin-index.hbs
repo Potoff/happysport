@@ -62,23 +62,25 @@
     </div>
     {{/if}}
     {{!-- Search bar --}}
-    <div class="d-flex align-items-center mt-5" id="spinnerContainerPartner">
+    <div class="d-flex flex-column align-items-center justify-content-around mt-5" id="spinnerContainerPartner">
         <input class="form-control me-2 me-4" list="datalistOptions" id="exampleDataListPartner"
             placeholder="Chercher une franchise ... ">
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="all"
-                onclick="window.location='/admin';" checked>
-            <label class="form-check-label" for="inlineRadio1">Toute</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="activePartnerRadio"
-                value="actif">
-            <label class="form-check-label" for="activePartnerRadio">Active</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inactivePartnerRadio"
-                value="inactif">
-            <label class="form-check-label" for="inactivePartnerRadio">Inactive</label>
+        <div class="mt-4 align-self-start">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="all"
+                    onclick="window.location='/admin';" checked>
+                <label class="form-check-label" for="inlineRadio1">Toute</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="activePartnerRadio"
+                    value="actif">
+                <label class="form-check-label" for="activePartnerRadio">Active</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inactivePartnerRadio"
+                    value="inactif">
+                <label class="form-check-label" for="inactivePartnerRadio">Inactive</label>
+            </div>
         </div>
     </div>
 </div>
