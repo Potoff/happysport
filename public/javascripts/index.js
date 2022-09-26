@@ -8,6 +8,16 @@ let inactiveHallRadio = document.getElementById('inactiveHallRadio');
 let selectPartner = document.getElementById('selectPartner');
 let activeHallByPartnerRadio = document.getElementById('activeHallByPartnerRadio');
 let inactiveHallByPartnerRadio = document.getElementById('inactiveHallByPartnerRadio');
+let getAllRadio = document.getElementsByClassName('getAllRadio');
+
+async function getAllCards(){
+  setTimeout(() => {
+    let cards = document.getElementsByClassName('card');
+    for(i=0; i < cards.length; i++ ){
+      cards[i].style.display = "";
+    }
+  }, 500);
+}
 
 async function searchPartner(e) {
   setTimeout(() => {
@@ -209,6 +219,12 @@ if(activeHallByPartnerRadio){
 
 if(inactiveHallByPartnerRadio){
   inactiveHallByPartnerRadio.addEventListener('input', searchInactiveHallByPartner)
+}
+
+for(i=0; i < getAllRadio.length; i++){
+  if(getAllRadio[i]){
+    getAllRadio[i].addEventListener('input', getAllCards)
+  }
 }
 
 

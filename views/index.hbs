@@ -1,10 +1,9 @@
-<div class="container h-75 d-flex flex-column align-items-center justify-content-evenly">
-    <div class="d-flex justify-content-center align-items-center">
+<div class="container h-75 d-flex flex-column align-items-center justify-content-around">
+    <div class="d-flex justify-content-center align-items-center mt-5">
         <img src="/images/logo-haltere.png" alt=""
             class="img-fluid w-25 border rounded rounded-5 border-2 border-dark border-opacity-25 rounded-circle p-2">
         <h1 class="ms-4">HappySport</h1>
     </div>
-    <div class="border rounded rounded-5 border-2 border-dark border-opacity-25 p-5 bg-light align-self-center w-75-md">
         {{#if message}}
             <div class="alert alert-danger mt-4 text-center">
                 <p class="text-center">{{message}}</p>
@@ -15,6 +14,7 @@
                 <p class="text-center">{{error}}</p>
             </div>
             {{/if}}
+    <div class="border rounded rounded-5 border-2 border-dark border-opacity-25 p-5 bg-light align-self-center w-75-md">
         <form method="POST" action="/user/login">
             <div class="mb-3">
                 <label for="email" class="form-label" name="email">Login :</label>
