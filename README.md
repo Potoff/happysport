@@ -63,11 +63,16 @@ En tant qu'administrateur, vous allez pouvoir gérer :
 
 En vous connectant, vous verrez d'office la liste de toutes les franchises sous la forme de cartes. 
 Sur chacune d'entre elles, se trouvent 3 boutons d'action qui vous invitent à modifier, supprimer ou afficher la franchise concernée. Une barre de recherche vous permet d'affiner cette liste.
+
 Le menu en haut vous invitera à vous diriger vers le menu des modules pour gérer les permissions (créer, modifier ou supprimer). 
+
 Le menu salle vous permettra de gérer les salles et leurs permissions et d'affiner votre recherche, de la même manière que pour les franchises.
+
 Pour donner des permissions aux franchises ou/et salles, il faut accèder à la page de modification de celle souhaitée en cliquant sur le crayon correspondant .
 A chaque création ou modification, un email sera envoyé au mail de contact des personnes concernées.
+
 Chaque franchise peut avoir plusieurs salles mais une salle appartient à une seule franchise : ainsi, à la suppression d'une franchise, les salles liées seront également supprimées.
+
 De même, un module supprimé pour une franchise sera également supprimé pour la salle.
 
 ### 🧑‍🔧 Franchise
