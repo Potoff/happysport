@@ -259,13 +259,16 @@ exports.updateOnePartner = (req, res, next) => {
             })
 
             if (req.body.module) {
+                partner.Halls.forEach((hall) => {
+                    hall.setModules(req.body.module);
+                })
                 partner.setModules(req.body.module);
                 return partner
             }
             else {
                 partner.Halls.forEach((hall) => {
 
-                    hall.removeModules(partner.Modules)
+                    hall.removeModules(partner.Modules);
                 })
                 partner.removeModules(partner.Modules);
                 return partner

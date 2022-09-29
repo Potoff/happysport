@@ -75,7 +75,7 @@ db.hall.belongsToMany(db.module, { through: 'Hall_Modules'});
 db.module.belongsToMany(db.hall, { through: 'Hall_Modules'});
 
 sequelize.sync()
-  .then( () => console.log('Postgres synchro tonton, c\'est bieng !'))
+  .then( () => console.log('Postgres synchro, c\'est bieng !'))
   .catch((err) => {
     console.log({err: err})
   });
