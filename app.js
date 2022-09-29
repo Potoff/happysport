@@ -7,6 +7,7 @@ const passport = require('passport');
 const session = require('express-session');
 const flash = require('connect-flash-plus');
 const cors = require('cors');
+const helmet = require('helmet');
 require('./config/passport');
 require('hbs');
 
@@ -21,7 +22,19 @@ const salleRouter = require('./routes/salle');
 // App Middleware
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-app.use(cors());
+app.use(cors({ origin: false }));
+app.use(
+    helmet({
+        contentSecurityPolicy: {
+            directives: {
+                ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+                "img-src": ["'self'", "*"],
+            },
+        },
+        crossOriginEmbedderPolicy: false,
+        crossOriginResourcePolicy: false,
+    })
+);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/css', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css')));
 app.use('/js', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js')));
@@ -62,8 +75,8 @@ app.use('/franchise', (req, res, next) => {
     res.render('index', { message: req.flash('error') })
 }, franchiseRouter);
 
-app.use('/salle',(req, res, next) => {
-    if(req.isAuthenticated() && req.user.RoleId === 3){
+app.use('/salle', (req, res, next) => {
+    if (req.isAuthenticated() && req.user.RoleId === 3) {
         return next()
     }
     req.flash('error', 'Vous devez être connecté être gérant de salle pour acceder à cette page !')
