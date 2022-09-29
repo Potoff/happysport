@@ -68,7 +68,7 @@ Le menu en haut vous invitera à vous diriger vers le menu des modules pour gér
 
 Le menu salle vous permettra de gérer les salles et leurs permissions et d'affiner votre recherche, de la même manière que pour les franchises.
 
-Pour donner des permissions aux franchises ou/et salles, il faut accèder à la page de modification de celle souhaitée en cliquant sur le crayon correspondant .
+Pour donner des permissions aux franchises ou/et salles, il faut accèder à la page de modification de celle souhaitée en cliquant sur le crayon correspondant . Pour rajouter un module, il suffit de cocher ceux souhaités. Pour les supprimer, laissez simplement la case décochée et validez le formulaire : de cette façon, le module sera supprimé du partenaire ou de la salle.
 A chaque création ou modification, un email sera envoyé au mail de contact des personnes concernées.
 
 Chaque franchise peut avoir plusieurs salles mais une salle appartient à une seule franchise : ainsi, à la suppression d'une franchise, les salles liées seront également supprimées.
